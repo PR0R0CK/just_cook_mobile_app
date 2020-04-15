@@ -10,8 +10,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class MainActivity extends AppCompatActivity {
     int counter = 0;
+    private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,6 +26,9 @@ public class MainActivity extends AppCompatActivity {
         Log.d("MainActivit","Email: "+testEmail);
         Log.d("MainActivit","Email: "+testPassword);
 
+        //Firebase Authentication
+//        FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
 
         findViewById(R.id.register_button_login).setOnClickListener(new View.OnClickListener() {
             @Override

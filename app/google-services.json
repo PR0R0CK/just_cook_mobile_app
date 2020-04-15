@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "968194681922",
+    "firebase_url": "https://just-cook-ba441.firebaseio.com",
+    "project_id": "just-cook-ba441",
+    "storage_bucket": "just-cook-ba441.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:968194681922:android:b843dbc7b5dea9cfc7d1db",
+        "android_client_info": {
+          "package_name": "com.example.justcook"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "968194681922-aod5voh9rk4cki16rfn3gcv9s7btsgtb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDe89tpyX6i-DkuGUj2TljDqWgiV4UPQWk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "968194681922-aod5voh9rk4cki16rfn3gcv9s7btsgtb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
