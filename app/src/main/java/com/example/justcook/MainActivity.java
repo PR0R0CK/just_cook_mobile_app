@@ -17,18 +17,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        EditText email = findViewById(R.id.email_editText_login);
-        EditText password = findViewById(R.id.password_editText_login);
-        Button register = findViewById(R.id.register_button_login);
-
-        String testEmail = email.getText().toString();
-        String testPassword = password.getText().toString();
+        String testEmail = this.<EditText>findViewById(R.id.email_editText_login).getText().toString();
+        String testPassword = this.<EditText>findViewById(R.id.password_editText_login).getText().toString();
 
         Log.d("MainActivit","Email: "+testEmail);
         Log.d("MainActivit","Email: "+testPassword);
 
 
-        register.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.register_button_login).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 counter++;
@@ -36,8 +32,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        TextView alreadyHaveAccount = findViewById(R.id.alreadyHaveAccount_textView_register);
-        alreadyHaveAccount.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.alreadyHaveAccount_textView_register).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d("MainActivit","LogIn Activity");
