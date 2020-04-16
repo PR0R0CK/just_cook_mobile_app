@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        etEmail =
+//        etEmail =
         email = this.<EditText>findViewById(R.id.email_editText_login).getText().toString();
         password = this.<EditText>findViewById(R.id.password_editText_login).getText().toString();
 
