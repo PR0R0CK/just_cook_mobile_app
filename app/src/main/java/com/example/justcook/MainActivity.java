@@ -33,14 +33,6 @@ public class MainActivity extends AppCompatActivity {
         etEmail = findViewById(R.id.email_editText_register);
         etPassword = findViewById(R.id.password_editText_register);
 
-        username = etUsername.getText().toString();
-        email = etEmail.getText().toString();
-        password = etPassword.getText().toString();
-
-        Log.d("MainActivit", "Username: " + username);
-        Log.d("BEFMainActivitREGISTER", "Email: " + email);
-        Log.d("BEFMainActivitREGISTER", "Password: " + password);
-
         //Firebase Authentication
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
@@ -51,9 +43,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 counter++;
-//                username = etUsername.getText().toString();
-//                email = etEmail.getText().toString();
-//                password = etPassword.getText().toString();
+                username = etUsername.getText().toString();
+                email = etEmail.getText().toString();
+                password = etPassword.getText().toString();
 
                 Log.d("MainActivit","Button was clicked: "+counter + " times");
                 Log.d("MainActivit", "Username: " + username);
