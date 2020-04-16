@@ -29,9 +29,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        etEmail =
-        email = this.<EditText>findViewById(R.id.email_editText_login).getText().toString();
-        password = this.<EditText>findViewById(R.id.password_editText_login).getText().toString();
+        etEmail = findViewById(R.id.email_editText_register);
+        etPassword = findViewById(R.id.password_editText_register);
+
 
         Log.d("BEFMainActivitREGISTER", "Email: " + email);
         Log.d("BEFMainActivitREGISTER", "Password: " + password);
@@ -42,12 +42,12 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        findViewById(R.id.register_button_login).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.register_button_register).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 counter++;
-                email = this.<EditText>findViewById(R.id.email_editText_login).getText().toString();
-                password = this.<EditText>findViewById(R.id.password_editText_login).getText().toString();
+                email = etEmail.getText().toString();
+                password = etPassword.getText().toString();
                 Log.d("MainActivit","Button was clicked: "+counter + " times");
                 Log.d("MainActivit", "Email: " + email);
                 Log.d("MainActivit", "Password: " + password);
