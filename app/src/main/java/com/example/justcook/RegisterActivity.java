@@ -7,9 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -18,7 +16,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class MainActivity extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity {
     private int counter = 0;
     private EditText etUsername,etEmail,etPassword;
     private String username,email,password;
@@ -37,8 +35,6 @@ public class MainActivity extends AppCompatActivity {
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
 
-
-
         findViewById(R.id.register_button_register).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,16 +49,15 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("MainActivit", "Password: " + password);
 
                 mAuth.createUserWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
+                        .addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-
                                     Log.d("MAIN ACTIVITY", "createUserWithEmail:success");
                                     FirebaseUser user = mAuth.getCurrentUser();
                                 } else {
                                     Log.d("MAIN ACTIVITY","failed !!!!!!!!!");
-                                    Toast.makeText(MainActivity.this, "ERROR",Toast.LENGTH_LONG).show();
+                                    Toast.makeText(RegisterActivity.this, "ERROR",Toast.LENGTH_LONG).show();
                                 }
                             }
                         });
@@ -73,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.d("MainActivit","LogIn Activity");
-                Intent intent = new Intent(MainActivity.this,LoginActivity.class);
+                Intent intent = new Intent(RegisterActivity.this,LoginActivity.class);
                 startActivity(intent);
             }
         });
