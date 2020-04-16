@@ -33,8 +33,6 @@ hs_err_pid*
 # Java class files
 *.class
 
-# XML files
-*.xml
 
 # generated files
 bin/
