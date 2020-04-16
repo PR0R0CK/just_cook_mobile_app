@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
         etEmail = findViewById(R.id.email_editText_register);
         etPassword = findViewById(R.id.password_editText_register);
 
-
         Log.d("BEFMainActivitREGISTER", "Email: " + email);
         Log.d("BEFMainActivitREGISTER", "Password: " + password);
 
