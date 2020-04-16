@@ -53,10 +53,11 @@ public class RegisterActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    Log.d("MAIN ACTIVITY", "createUserWithEmail:success");
+                                    Log.d("REGISTER", "createUserWithEmail:success");
                                     FirebaseUser user = mAuth.getCurrentUser();
                                 } else {
-                                    Log.d("MAIN ACTIVITY","failed !!!!!!!!!");
+                                    Log.d("REGISTER","failed !!!!!!!!!");
+                                    Log.w("REGISTER", "createUserWithEmail:failure", task.getException());
                                     Toast.makeText(RegisterActivity.this, "ERROR",Toast.LENGTH_LONG).show();
                                 }
                             }
