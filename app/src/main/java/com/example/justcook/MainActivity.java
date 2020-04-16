@@ -20,8 +20,8 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
     private int counter = 0;
-    private EditText etEmail,etPassword;
-    private String email,password;
+    private EditText etUsername,etEmail,etPassword;
+    private String username,email,password;
     private FirebaseAuth mAuth;
 
     @Override
@@ -29,9 +29,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        etUsername = findViewById(R.id.username_editText_register);
         etEmail = findViewById(R.id.email_editText_register);
         etPassword = findViewById(R.id.password_editText_register);
 
+        username = etUsername.getText().toString();
+        email = etEmail.getText().toString();
+        password = etPassword.getText().toString();
+
+        Log.d("MainActivit", "Username: " + username);
         Log.d("BEFMainActivitREGISTER", "Email: " + email);
         Log.d("BEFMainActivitREGISTER", "Password: " + password);
 
@@ -45,26 +51,29 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 counter++;
-                email = etEmail.getText().toString();
-                password = etPassword.getText().toString();
+//                username = etUsername.getText().toString();
+//                email = etEmail.getText().toString();
+//                password = etPassword.getText().toString();
+
                 Log.d("MainActivit","Button was clicked: "+counter + " times");
+                Log.d("MainActivit", "Username: " + username);
                 Log.d("MainActivit", "Email: " + email);
                 Log.d("MainActivit", "Password: " + password);
 
-//                mAuth.createUserWithEmailAndPassword(email, password)
-//                        .addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
-//                            @Override
-//                            public void onComplete(@NonNull Task<AuthResult> task) {
-//                                if (task.isSuccessful()) {
-//
-//                                    Log.d("MAIN ACTIVITY", "createUserWithEmail:success");
-//                                    FirebaseUser user = mAuth.getCurrentUser();
-//                                } else {
-//                                    Log.d("MAIN ACTIVITY","failed !!!!!!!!!");
-//                                    Toast.makeText(MainActivity.this, "ERROR",Toast.LENGTH_LONG).show();
-//                                }
-//                            }
-//                        });
+                mAuth.createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+
+                                    Log.d("MAIN ACTIVITY", "createUserWithEmail:success");
+                                    FirebaseUser user = mAuth.getCurrentUser();
+                                } else {
+                                    Log.d("MAIN ACTIVITY","failed !!!!!!!!!");
+                                    Toast.makeText(MainActivity.this, "ERROR",Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        });
             }
         });
 
