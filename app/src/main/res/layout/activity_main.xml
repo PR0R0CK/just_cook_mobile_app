@@ -58,7 +58,7 @@
         app:layout_constraintEnd_toEndOf="@+id/password_editText_register"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/password_editText_register"
-        app:layout_constraintTop_toBottomOf="@+id/password_editText_register" />
+        app:layout_constraintTop_toBottomOf="@+id/data_checkBox_register" />
 
     <TextView
         android:id="@+id/alreadyHaveAccount_textView_register"
@@ -72,4 +72,18 @@
         app:layout_constraintEnd_toEndOf="@+id/register_button_register"
         app:layout_constraintStart_toStartOf="@+id/register_button_register"
         app:layout_constraintTop_toBottomOf="@+id/register_button_register" />
+
+    <CheckBox
+        android:id="@+id/data_checkBox_register"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:text="I accept the use of personal data to use the JustCook!  "
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/password_editText_register" />
 </androidx.constraintlayout.widget.ConstraintLayout>

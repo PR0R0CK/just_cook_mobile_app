@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -21,7 +22,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText etUsername,etEmail,etPassword;
     private String username,email,password;
     private FirebaseAuth mAuth;
-
+    private boolean isChecked;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,25 +43,32 @@ public class RegisterActivity extends AppCompatActivity {
                 username = etUsername.getText().toString();
                 email = etEmail.getText().toString();
                 password = etPassword.getText().toString();
+                isChecked = ((CheckBox)findViewById(R.id.data_checkBox_register)).isChecked();
 
                 Log.d("MainActivit","Button was clicked: "+counter + " times");
                 Log.d("MainActivit", "Username: " + username);
                 Log.d("MainActivit", "Email: " + email);
                 Log.d("MainActivit", "Password: " + password);
-
-                mAuth.createUserWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    Log.d("MAIN ACTIVITY", "createUserWithEmail:success");
-                                    FirebaseUser user = mAuth.getCurrentUser();
-                                } else {
-                                    Log.d("MAIN ACTIVITY","failed !!!!!!!!!");
-                                    Toast.makeText(RegisterActivity.this, "ERROR",Toast.LENGTH_LONG).show();
+                Log.d("MainActivit", "Checked: " + isChecked);
+                if(isChecked){
+                    mAuth.createUserWithEmailAndPassword(email, password)
+                            .addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (task.isSuccessful()) {
+                                        Log.d("MAIN ACTIVITY", "createUserWithEmail:success");
+                                        FirebaseUser user = mAuth.getCurrentUser();
+                                    } else {
+                                        Log.d("MAIN ACTIVITY","failed !!!!!!!!!");
+                                        Toast.makeText(RegisterActivity.this, "ERROR",Toast.LENGTH_LONG).show();
+                                    }
                                 }
-                            }
-                        });
+                            });
+                }else{
+                    Toast.makeText(RegisterActivity.this, "You have to accept privacy policy first.",Toast.LENGTH_SHORT).show();
+                }
+
+
             }
         });
 
