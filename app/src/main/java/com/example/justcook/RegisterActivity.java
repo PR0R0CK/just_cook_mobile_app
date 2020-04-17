@@ -59,6 +59,7 @@ public class RegisterActivity extends AppCompatActivity {
                                     if (task.isSuccessful()) {
                                         Log.d("REGISTER", "createUserWithEmail:success");
                                         FirebaseUser user = mAuth.getCurrentUser();
+                                        startActivity(new Intent(RegisterActivity.this,ConfirmationActivity.class));
                                     } else {
                                         Log.d("REGISTER","failed !!!!!!!!!");
                                         Log.w("REGISTER", "createUserWithEmail:failure", task.getException());
