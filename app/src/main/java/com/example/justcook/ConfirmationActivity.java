@@ -12,6 +12,10 @@ public class ConfirmationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirmation);
         //TODO: edytowanie zawartości @+id/username_TextView_confirmation na nazwę zalogowanego użytkownia
+        //W nazewnictwie zmiennych używaj cammelCase
+        // "username_TextView_confirmation" - źle
+        // "username_textView_confirmation" - dobrze
+        // Drobny szczegół, ale razi. Popraw w activity_confirmation
     }
 
     public void confirmationContinue(View view) {
