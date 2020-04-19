@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -37,8 +38,8 @@ public class LoginActivity extends AppCompatActivity {
 
                 Log.d("###MainActivit", "Email: " + email);
                 Log.d("###MainActivit", "Password: " + password);
-                Toast.makeText(LoginActivity.this, "Email: "+email+", Password: "+password,
-                        Toast.LENGTH_SHORT).show();
+//                Toast.makeText(LoginActivity.this, "Email: "+email+", Password: "+password,
+//                        Toast.LENGTH_SHORT).show();
 
                 mAuth.signInWithEmailAndPassword(email,password)
                         .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
@@ -48,13 +49,16 @@ public class LoginActivity extends AppCompatActivity {
                                     Log.d("###Login","loginWithEmail: success");
                                     FirebaseUser user = mAuth.getCurrentUser();
                                     verifyingUser(user);
-                                } else {
-                                    Log.w("###Warning","loginWithEmail: failed",task.getException());
-                                    Toast.makeText(LoginActivity.this, "Authentication failed.",
-                                            Toast.LENGTH_SHORT).show();
                                 }
                             }
-                        });
+                        })
+                .addOnFailureListener(LoginActivity.this, new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(LoginActivity.this, "Authentication failed: "
+                                + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
 
