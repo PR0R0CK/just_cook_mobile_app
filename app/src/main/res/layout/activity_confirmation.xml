@@ -7,16 +7,17 @@
     android:background="@drawable/edit_food2"
     tools:context=".ConfirmationActivity">
 
-    <Button
-        android:id="@+id/continue_button_confirmation"
-        android:layout_width="411dp"
-        android:layout_height="733dp"
-        android:alpha="0"
-        android:onClick="confirmationContinue"
-        android:text="Button"
+    <TextView
+        android:id="@+id/tap_TextView_confirmation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tap to continue"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/greetings_TextView_confirmation"
@@ -31,6 +32,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/continue_button_confirmation"
         app:layout_constraintVertical_bias="0.351" />
+
+    <Button
+        android:id="@+id/continue_button_confirmation"
+        android:layout_width="411dp"
+        android:layout_height="733dp"
+        android:alpha="0"
+        android:onClick="confirmationContinue"
+        android:text="Button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
 
     <TextView
         android:id="@+id/username_TextView_confirmation"
@@ -47,17 +59,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/greetings_TextView_confirmation"
         app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/tap_TextView_confirmation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Tap to continue"
-        android:textColor="@android:color/white"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
