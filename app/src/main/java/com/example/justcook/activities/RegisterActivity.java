@@ -15,6 +15,7 @@ import com.example.justcook.R;
 import com.example.justcook.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -106,6 +107,18 @@ public class RegisterActivity extends AppCompatActivity {
 
         User user = new User(userId, username, email);
 
-        ref.setValue(user);
+        ref.setValue(user)
+                .addOnSuccessListener(RegisterActivity.this, new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("RegisterActivity","User has been saved to the FirebaseDatabase!!");
+                    }
+                })
+                .addOnFailureListener(RegisterActivity.this, new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("RegisterActivity","The user has not been saved to the FirebaseDatabase!!");
+                    }
+                });
     }
 }
