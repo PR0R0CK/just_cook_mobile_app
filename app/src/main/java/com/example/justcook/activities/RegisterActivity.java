@@ -12,19 +12,21 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.justcook.R;
+import com.example.justcook.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterActivity extends AppCompatActivity {
     private int counter = 0;
     private EditText etUsername,etEmail,etPassword;
     private FirebaseAuth mAuth;
-    private FirebaseDatabase database;
+    private FirebaseDatabase mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +39,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         //Firebase Authentication and Database
         mAuth = FirebaseAuth.getInstance();
-        database = FirebaseDatabase.getInstance();
+        mDatabase = FirebaseDatabase.getInstance();
 
         findViewById(R.id.register_button_register).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,8 +60,8 @@ public class RegisterActivity extends AppCompatActivity {
     }
     private void instantRegister() {
         counter++;
-        String username = etUsername.getText().toString();
-        String email = etEmail.getText().toString();
+        final String username = etUsername.getText().toString();
+        final String email = etEmail.getText().toString();
         final String password = etPassword.getText().toString();
         boolean isChecked = ((CheckBox) findViewById(R.id.data_checkBox_register)).isChecked();
 
@@ -78,8 +80,7 @@ public class RegisterActivity extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
                                     Log.d("REGISTER", "createUserWithEmail:success");
-//                                          FirebaseUser user = mAuth.getCurrentUser();
-//                                    saveUserToFirebaseDatabase(username,email,password);
+                                    saveUserToFirebaseDatabase(username, email);
                                     startActivity(new Intent(RegisterActivity.this, ConfirmationActivity.class));
                                 }
                             }
@@ -98,8 +99,13 @@ public class RegisterActivity extends AppCompatActivity {
             }
         }
     }
-//TODO saveUserToFirebaseDatabase
-    private void saveUserToFirebaseDatabase(String username, String email, String password) {
 
+    private void saveUserToFirebaseDatabase(String username, String email) {
+        String userId = FirebaseAuth.getInstance().getUid();
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("/users/"+userId);
+
+        User user = new User(userId, username, email);
+
+        ref.setValue(user);
     }
 }
