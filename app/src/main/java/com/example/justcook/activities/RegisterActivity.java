@@ -1,4 +1,4 @@
-package com.example.justcook;
+package com.example.justcook.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,17 +11,20 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.justcook.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterActivity extends AppCompatActivity {
     private int counter = 0;
     private EditText etUsername,etEmail,etPassword;
     private FirebaseAuth mAuth;
+    private FirebaseDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +35,9 @@ public class RegisterActivity extends AppCompatActivity {
         etEmail = findViewById(R.id.email_editText_register);
         etPassword = findViewById(R.id.password_editText_register);
 
-        //Firebase Authentication
+        //Firebase Authentication and Database
         mAuth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
 
         findViewById(R.id.register_button_register).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,7 +60,7 @@ public class RegisterActivity extends AppCompatActivity {
         counter++;
         String username = etUsername.getText().toString();
         String email = etEmail.getText().toString();
-        String password = etPassword.getText().toString();
+        final String password = etPassword.getText().toString();
         boolean isChecked = ((CheckBox) findViewById(R.id.data_checkBox_register)).isChecked();
 
         if (username.isEmpty() || email.isEmpty() || password.isEmpty()) {
@@ -75,6 +79,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                                     Log.d("REGISTER", "createUserWithEmail:success");
 //                                          FirebaseUser user = mAuth.getCurrentUser();
+//                                    saveUserToFirebaseDatabase(username,email,password);
                                     startActivity(new Intent(RegisterActivity.this, ConfirmationActivity.class));
                                 }
                             }
@@ -92,5 +97,9 @@ public class RegisterActivity extends AppCompatActivity {
                         Toast.LENGTH_SHORT).show();
             }
         }
+    }
+//TODO saveUserToFirebaseDatabase
+    private void saveUserToFirebaseDatabase(String username, String email, String password) {
+
     }
 }

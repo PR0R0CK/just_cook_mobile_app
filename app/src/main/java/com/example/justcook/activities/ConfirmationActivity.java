@@ -1,9 +1,11 @@
-package com.example.justcook;
+package com.example.justcook.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+
+import com.example.justcook.R;
 
 public class ConfirmationActivity extends AppCompatActivity {
 
