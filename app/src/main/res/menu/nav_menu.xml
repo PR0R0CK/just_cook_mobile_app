@@ -13,11 +13,15 @@
             android:onClick="onNavigationItemSelected"/>
         <item
             android:id="@+id/nav_main_courses"
-            android:title="Desserts"
+            android:title="Main courses"
             android:onClick="onNavigationItemSelected"/>
 
     </group>
     <group>
+        <item
+            android:id="@+id/nav_add_recipe"
+            android:title="Add recipe"
+            android:onClick="onNavigationItemSelected"/>
         <item
             android:id="@+id/nav_my_recipes"
             android:title="My recipes"

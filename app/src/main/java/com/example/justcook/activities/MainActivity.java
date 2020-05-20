@@ -56,6 +56,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_log_out) {
             Toast toast = Toast.makeText(getApplicationContext(), "Log out", Toast.LENGTH_SHORT);
             toast.show();
+        } else if (id == R.id.nav_add_recipe) {
+            Toast toast = Toast.makeText(getApplicationContext(), "Add recipe", Toast.LENGTH_SHORT);
+            toast.show();
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
