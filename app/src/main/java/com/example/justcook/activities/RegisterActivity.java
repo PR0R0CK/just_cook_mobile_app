@@ -56,6 +56,7 @@ public class RegisterActivity extends AppCompatActivity {
                 Log.d("MainActivit","LogIn Activity");
                 Intent intent = new Intent(RegisterActivity.this,LoginActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
     }

@@ -3,6 +3,7 @@ package com.example.justcook.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -61,13 +62,13 @@ public class LoginActivity extends AppCompatActivity {
                 });
             }
         });
-
-        findViewById(R.id.backToRegister_editText_login).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        //Musialem zmienic ten fragment onclicka, bo kliknięcie back w main activity cofnęłoby
+        //do rejestracji/logowania
+//        findViewById(R.id.backToRegister_editText_login).setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//                finish();
+//            }
+//        });
     }
 
     private void verifyingUser(FirebaseUser user) {
@@ -80,5 +81,18 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             Log.d("###NoUser","Incorrect User");
         }
+    }
+
+    public void tmpMainActivityRedirect(View view) {
+        finish();
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+
+     }
+
+    public void navigationBackToRegister(View view) {
+        Intent intent = new Intent(this, RegisterActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

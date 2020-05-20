@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <group>
+        <item
+            android:id="@+id/nav_desserts"
+            android:title="Desserts"
+            android:onClick="onNavigationItemSelected"/>
+        <item
+            android:id="@+id/nav_soups"
+            android:title="Soups"
+            android:onClick="onNavigationItemSelected"/>
+        <item
+            android:id="@+id/nav_main_courses"
+            android:title="Desserts"
+            android:onClick="onNavigationItemSelected"/>
+
+    </group>
+    <group>
+        <item
+            android:id="@+id/nav_my_recipes"
+            android:title="My recipes"
+            android:onClick="onNavigationItemSelected"/>
+        <item
+            android:id="@+id/nav_log_out"
+            android:title="Log out"
+            android:onClick="onNavigationItemSelected"/>
+    </group>
+</menu>
