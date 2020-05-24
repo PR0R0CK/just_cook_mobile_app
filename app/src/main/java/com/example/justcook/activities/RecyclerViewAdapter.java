@@ -1,6 +1,7 @@
 package com.example.justcook.activities;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,7 +45,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.recipeType.setText("Dessert");
         holder.recipeAuthor.setText("Ulaniec");
         holder.recipeTitle.setText(placeholderInformation.get(position));
-
+        if(position%2==1) holder.parentLayout.setBackgroundColor(Color.parseColor("#F8033101"));
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
