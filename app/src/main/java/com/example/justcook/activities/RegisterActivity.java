@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.justcook.R;
+import com.example.justcook.model.RecipeBook;
 import com.example.justcook.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -20,8 +21,14 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
     private int counter = 0;
@@ -38,9 +45,12 @@ public class RegisterActivity extends AppCompatActivity {
         etEmail = findViewById(R.id.email_editText_register);
         etPassword = findViewById(R.id.password_editText_register);
 
+
         //Firebase Authentication and Database
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance();
+
+        saveRecipeToFirebaseDatabase();
 
         findViewById(R.id.register_button_register).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,5 +131,34 @@ public class RegisterActivity extends AppCompatActivity {
                         Log.d("RegisterActivity","The user has not been saved to the FirebaseDatabase!!");
                     }
                 });
+    }
+
+    private void saveRecipeToFirebaseDatabase() {
+        String userId = FirebaseAuth.getInstance().getUid();
+//        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("/recipes/"+)
+        DatabaseReference ref = mDatabase.getReference("/recipes");
+
+//        Map<String, RecipeBook> recipesBook = new HashMap<>();
+//        recipesBook.put("1",new RecipeBook(userId,"1","zdjZupy","jajko,kiełbasa,woda","Pokroic jajko i kelbase, wlac wode","łatwe","5"));
+//        recipesBook.put("2",new RecipeBook(userId,"2","zdjZupy","jajko,kiełbasa,woda","Pokroic jajko i kelbase, wlac wode","łatwe","5"));
+        RecipeBook recipesBook = new RecipeBook(userId,"2","zdjZupy","jajko,kiełbasa,woda","Pokroic jajko i kelbase, wlac wode","łatwe","5");
+        ref.setValue(recipesBook);
+
+        Toast.makeText(RegisterActivity.this,"Stworzono przepis",Toast.LENGTH_SHORT);
+
+        //dwonloading data
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                RecipeBook recBook = dataSnapshot.getValue(RecipeBook.class);
+                Log.d("Download",recBook.toString());
+                System.out.println(recBook);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
     }
 }
