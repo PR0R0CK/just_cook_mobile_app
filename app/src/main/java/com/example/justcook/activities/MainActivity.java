@@ -54,7 +54,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         getRecipes();
         initRecyclerView();
-//        fetchJson();
 
     }
 
@@ -148,49 +147,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
     }
-
-
-
-//    private void fetchJson() {
-//        RecyclerView recyclerView = findViewById(R.id.content_recyclerView_main);
-//        final ArrayList<String> placeholderInformation = new ArrayList<>();
-//        final FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
-////        if (isInternetConnection()) {
-////            Toast.makeText(this, "Refreshed!", Toast.LENGTH_SHORT).show();
-//            println("Attempting to fetch JSON");
-//
-//            String url = "https://just-cook-ba441.firebaseio.com/recipes/name.json";
-//
-//            OkHttpClient client = new OkHttpClient();
-//            Request request = new Request.Builder().url(url).build();
-//
-//        client.newCall(request).enqueue(new Callback() {
-//            @Override
-//            public void onFailure(Call call, IOException e) {
-//                e.printStackTrace();
-//            }
-//
-//            @Override
-//            public void onResponse(Call call, okhttp3.Response response) throws IOException {
-//                if (!response.isSuccessful()) {
-//                    throw new IOException("Unexpected code " + response);
-//                } else {
-//                    String body = response.body().string();
-//                    Log.d("OKhttp",body);
-//                    Gson gson = new GsonBuilder().create();
-//
-//                    List<String> placeholderInformation = new ArrayList<>();
-//                    placeholderInformation.add(gson.fromJson(body,String.class));
-//                }
-//
-//            }
-//
-//
-////        } else {
-////            Toast.makeText(this,"You don't have Internet Connection!",Toast.LENGTH_LONG).show();
-////        }
-//
-//        });
-//    }
 
 }
