@@ -49,8 +49,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        initRecyclerView();
-//        fetchJson();
+//        initRecyclerView();
+        fetchJson();
 
     }
 
@@ -149,9 +149,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                     placeholderInformation.add(gson.fromJson(body,String.class));
 
-                    RecyclerViewAdapter adapter = new RecyclerViewAdapter(placeholderInformation,this);
-                    recyclerView.setAdapter(adapter);
-                    recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//                    RecyclerViewAdapter adapter = new RecyclerViewAdapter(placeholderInformation,this);
+//                    recyclerView.setAdapter(adapter);
+//                    recyclerView.setLayoutManager(new LinearLayoutManager(this));
                 }
 
             }
