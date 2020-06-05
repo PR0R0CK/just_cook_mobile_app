@@ -93,6 +93,14 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <TextView
+            android:id="@+id/id_textView_recipe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:alpha="0"
+            android:text="TextView"
+            android:textSize="0dp" />
+
     </LinearLayout>
 
 
