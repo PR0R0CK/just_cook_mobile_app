@@ -37,6 +37,13 @@ dependencies {
     implementation 'com.android.support:support-v4:28.0.0'
     implementation 'com.google.android.material:material:1.0.0'
 
+
+    //OKhttp
+    implementation 'com.squareup.okhttp3:okhttp:3.9.1'
+
+    //GSON
+    implementation 'com.google.code.gson:gson:2.8.0'
+
 }
 
 apply plugin: 'com.android.application'

@@ -1,5 +1,6 @@
 package com.example.justcook.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -8,18 +9,33 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import android.os.Bundle;
+import okhttp3.*;
+import android.util.Log;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.justcook.R;
+import com.example.justcook.model.RecipeBook;
+import com.google.android.gms.common.api.Response;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+
+import static java.sql.DriverManager.println;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
+    RecyclerView recyclerView = findViewById(R.id.content_recyclerView_main);
     //TODO: utworzenie Data Class "Recipe"
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
 
         initRecyclerView();
+//        fetchJson();
 
     }
 
@@ -75,17 +92,72 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    private void initRecyclerView(){
-        RecyclerView recyclerView = findViewById(R.id.content_recyclerView_main);
-        ArrayList<String> placeholderInformation = new ArrayList<>();
-        placeholderInformation.add("Franchezinha");
-        placeholderInformation.add("Pierogis");
-        placeholderInformation.add("Pancakes");
-        placeholderInformation.add("Beer Cake");
-        placeholderInformation.add("Junk Food Special");
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(placeholderInformation,this);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//    private void initRecyclerView(){
+//        RecyclerView recyclerView = findViewById(R.id.content_recyclerView_main);
+//        final ArrayList<String> placeholderInformation = new ArrayList<>();
+//
+//        String url  = "https://just-cook-ba441.firebaseio.com/recipes/name.json";
+//
+//
+//        //https://just-cook-ba441.firebaseio.com/recipes/name.json
+//
+//        placeholderInformation.add("Franchezinha");
+//        placeholderInformation.add("Pierogis");
+//        placeholderInformation.add("Pancakes");
+//        placeholderInformation.add("Beer Cake");
+//        placeholderInformation.add("Junk Food Special");
+//
+//
+//
+//        RecyclerViewAdapter adapter = new RecyclerViewAdapter(placeholderInformation,this);
+//        recyclerView.setAdapter(adapter);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//
+//
+//
+//    }
+
+
+
+    private void fetchJson() {
+
+        final ArrayList<String> placeholderInformation = new ArrayList<>();
+        final FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
+//        if (isInternetConnection()) {
+//            Toast.makeText(this, "Refreshed!", Toast.LENGTH_SHORT).show();
+            println("Attempting to fetch JSON");
+
+            String url = "https://just-cook-ba441.firebaseio.com/recipes/name.json";
+
+            OkHttpClient client = new OkHttpClient();
+            Request request = new Request.Builder().url(url).build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, okhttp3.Response response) throws IOException {
+                if (!response.isSuccessful()) {
+                    throw new IOException("Unexpected code " + response);
+                } else {
+                    String body = response.body().string();
+                    Log.d("OKhttp",body);
+                    Gson gson = new GsonBuilder().create();
+
+                    placeholderInformation.add(gson.fromJson(body,String.class));
+
+                    RecyclerViewAdapter adapter = new RecyclerViewAdapter(placeholderInformation,this);
+                    recyclerView.setAdapter(adapter);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(this));
+                }
+
+            }
+
+
+        });
     }
 
 }

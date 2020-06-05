@@ -15,12 +15,19 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.justcook.R;
+import com.example.justcook.model.RecipeBook;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>{
     private static final String TAG = "RecyclerViewAdapter";
+    private static final FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
 
     private ArrayList<String> placeholderInformation = new ArrayList<>();
     Context mContext;
@@ -40,10 +47,28 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        DatabaseReference ref = mDatabase.getReference("/recipes");
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                RecipeBook recBook = dataSnapshot.getValue(RecipeBook.class);
+                Log.d("Download",recBook.toString());
+                System.out.println(recBook);
+                placeholderInformation.add(recBook.getName());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
+
+
+
         Log.d("onbind", "onbind called");
         holder.recipeRating.setText("5");
         holder.recipeType.setText("Dessert");
-        holder.recipeAuthor.setText("Ulaniec");
+//        holder.recipeAuthor.setText("Ulaniec");
         holder.recipeTitle.setText(placeholderInformation.get(position));
         if(position%2==1) holder.parentLayout.setBackgroundColor(Color.parseColor("#F8033101"));
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
@@ -70,6 +95,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         TextView recipeType;
         TextView recipeRating;
         LinearLayout parentLayout;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             recipePhoto = itemView.findViewById(R.id.photo_imageView_recipe);

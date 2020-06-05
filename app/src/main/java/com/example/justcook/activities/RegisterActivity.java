@@ -141,7 +141,7 @@ public class RegisterActivity extends AppCompatActivity {
 //        Map<String, RecipeBook> recipesBook = new HashMap<>();
 //        recipesBook.put("1",new RecipeBook(userId,"1","zdjZupy","jajko,kiełbasa,woda","Pokroic jajko i kelbase, wlac wode","łatwe","5"));
 //        recipesBook.put("2",new RecipeBook(userId,"2","zdjZupy","jajko,kiełbasa,woda","Pokroic jajko i kelbase, wlac wode","łatwe","5"));
-        RecipeBook recipesBook = new RecipeBook(userId,"2","zdjZupy","jajko,kiełbasa,woda","Pokroic jajko i kelbase, wlac wode","łatwe","5");
+        RecipeBook recipesBook = new RecipeBook(userId,"2","Żurek","zdjZupy","jajko,kiełbasa,woda","Pokroic jajko i kelbase, wlac wode","łatwe","5");
         ref.setValue(recipesBook);
 
         Toast.makeText(RegisterActivity.this,"Stworzono przepis",Toast.LENGTH_SHORT);
