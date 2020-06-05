@@ -9,10 +9,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+
 import android.os.Bundle;
-import okhttp3.*;
 import android.util.Log;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -94,21 +92,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void initRecyclerView(){
         RecyclerView recyclerView = findViewById(R.id.content_recyclerView_main);
         final ArrayList<String> placeholderInformation = new ArrayList<>();
-
-//        String body = new Response().body().string();
-        String url  = "https://just-cook-ba441.firebaseio.com/recipes.json";
-        Gson gson = new GsonBuilder().create();
-        RecipeBook recipeBook = gson.fromJson(url,RecipeBook.class);
-
         placeholderInformation.add("Franchezinha");
         placeholderInformation.add("Pierogis");
         placeholderInformation.add("Pancakes");
         placeholderInformation.add("Beer Cake");
-
-//        placeholderInformation.add(recipeBook.getName());
-
         placeholderInformation.add("Junk Food Special");
-
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(placeholderInformation,this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
