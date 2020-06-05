@@ -5,8 +5,9 @@ import com.google.firebase.database.DatabaseReference;
 public class RecipeBook {
     private String userId;
     private String recipeId;
-
     private String name;
+
+    private String type;
 
     private String picture;
     private String ingredients;
@@ -14,11 +15,11 @@ public class RecipeBook {
     private String difficulty;
     private String rate;
     public RecipeBook(){}
-
-    public RecipeBook(String userId, String recipeId, String name, String picture, String ingredients, String recipe, String difficulty, String rate) {
+    public RecipeBook(String userId, String recipeId, String name, String type, String picture, String ingredients, String recipe, String difficulty, String rate) {
         this.userId = userId;
         this.recipeId = recipeId;
         this.name = name;
+        this.type = type;
         this.picture = picture;
         this.ingredients = ingredients;
         this.recipe = recipe;
@@ -48,6 +49,14 @@ public class RecipeBook {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getPicture() {

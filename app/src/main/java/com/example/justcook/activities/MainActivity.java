@@ -26,9 +26,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static java.sql.DriverManager.println;
@@ -48,9 +51,39 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
+        getRecipes();
         initRecyclerView();
 //        fetchJson();
 
+    }
+
+    private void getRecipes() {
+        String url = "https://just-cook-ba441.firebaseio.com/recipes.json";
+        Request request = new Request.Builder().url(url).build();
+
+        OkHttpClient client = new OkHttpClient();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.d("MainActivity","Gotta problem Bitch!");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String body = response.body().string();
+                Log.d("okHTTP",body);
+
+                Gson gson = new GsonBuilder().create();
+
+//                ArrayList<RecipeBook> recipeBooks = gson.fromJson(body,ArrayList<RecipeBook>);
+
+                Type listType = new TypeToken<ArrayList<RecipeBook>>(){}.getType();
+                List<RecipeBook> recipeBooks = gson.fromJson(body, listType);
+
+//                List<RecipeBook> recipeBooks = new Gson().fromJson()
+                Log.d("ShowFood ",recipeBooks.get(5).getName());
+            }
+        });
     }
 
     @Override

@@ -138,10 +138,14 @@ public class RegisterActivity extends AppCompatActivity {
 //        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("/recipes/"+)
         DatabaseReference ref = mDatabase.getReference("/recipes");
 
-//        Map<String, RecipeBook> recipesBook = new HashMap<>();
-//        recipesBook.put("1",new RecipeBook(userId,"1","zdjZupy","jajko,kiełbasa,woda","Pokroic jajko i kelbase, wlac wode","łatwe","5"));
-//        recipesBook.put("2",new RecipeBook(userId,"2","zdjZupy","jajko,kiełbasa,woda","Pokroic jajko i kelbase, wlac wode","łatwe","5"));
-        RecipeBook recipesBook = new RecipeBook(userId,"2","Żurek","zdjZupy","jajko,kiełbasa,woda","Pokroic jajko i kelbase, wlac wode","łatwe","5");
+        Map<String, RecipeBook> recipesBook = new HashMap<>();
+        recipesBook.put("0",new RecipeBook(userId,"0", "Żur","Zupa","zdjZupy","jajko,kiełbasa,woda","Pokroic jajko i kelbase, wlac wode","łatwe","5"));
+        recipesBook.put("1",new RecipeBook(userId,"1","Żurek","Zupa","zdjZupy","jajko,kiełbasa,woda","Pokroic jajko i kelbase, wlac wode","łatwe","5"));
+        recipesBook.put("2",new RecipeBook(userId,"2","Mur","Drugie danie","zdj","jajko,kiełbasa,woda","Pokroic jajko i kelbase, wlac wode","łatwe","5"));
+        recipesBook.put("3",new RecipeBook(userId,"3","Murek","Drugie danie","zdj","jajko,kiełbasa,woda","Pokroic jajko i kelbase, wlac wode","łatwe","5"));
+        recipesBook.put("4",new RecipeBook(userId,"4","Siur","Deser","zdj","jajko,kiełbasa,woda","Pokroic jajko i kelbase, wlac wode","trudne","5"));
+        recipesBook.put("5",new RecipeBook(userId,"5","Siurek","Deser","zdj","jajko,kiełbasa,woda","Pokroic jajko i kelbase, wlac wode","trudne","5"));
+//        RecipeBook recipesBook = new RecipeBook(userId,"2","Żurekkkkkk","zdjZupy","jajko,kiełbasa,woda","Pokroic jajko i kelbase, wlac wode","łatwe","5");
         ref.setValue(recipesBook);
 
         Toast.makeText(RegisterActivity.this,"Stworzono przepis",Toast.LENGTH_SHORT);
@@ -150,14 +154,14 @@ public class RegisterActivity extends AppCompatActivity {
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                RecipeBook recBook = dataSnapshot.getValue(RecipeBook.class);
-                Log.d("Download",recBook.toString());
-                System.out.println(recBook);
+//                RecipeBook recBook = dataSnapshot.getValue(RecipeBook.class);
+//                Log.d("Download",recBook.toString());
+//                System.out.println(recBook.getName());
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                System.out.println("The read failed: " + databaseError.getCode());
+//                System.out.println("The read failed: " + databaseError.getCode());
             }
         });
     }
