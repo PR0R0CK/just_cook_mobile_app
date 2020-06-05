@@ -37,6 +37,7 @@ import java.util.List;
 import static java.sql.DriverManager.println;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    List<RecipeBook> recipeBooks;
 
     //TODO: utworzenie Data Class "Recipe"
     @Override
@@ -78,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //                ArrayList<RecipeBook> recipeBooks = gson.fromJson(body,ArrayList<RecipeBook>);
 
                 Type listType = new TypeToken<ArrayList<RecipeBook>>(){}.getType();
-                List<RecipeBook> recipeBooks = gson.fromJson(body, listType);
+                recipeBooks = gson.fromJson(body, listType);
 
 //                List<RecipeBook> recipeBooks = new Gson().fromJson()
                 Log.d("ShowFood ",recipeBooks.get(5).getName());
