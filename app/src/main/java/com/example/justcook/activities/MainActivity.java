@@ -35,7 +35,7 @@ import java.util.List;
 import static java.sql.DriverManager.println;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    RecyclerView recyclerView = findViewById(R.id.content_recyclerView_main);
+
     //TODO: utworzenie Data Class "Recipe"
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +49,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-//        initRecyclerView();
-        fetchJson();
+        initRecyclerView();
+//        fetchJson();
 
     }
 
@@ -92,35 +92,39 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-//    private void initRecyclerView(){
-//        RecyclerView recyclerView = findViewById(R.id.content_recyclerView_main);
-//        final ArrayList<String> placeholderInformation = new ArrayList<>();
-//
-//        String url  = "https://just-cook-ba441.firebaseio.com/recipes/name.json";
-//
-//
-//        //https://just-cook-ba441.firebaseio.com/recipes/name.json
-//
-//        placeholderInformation.add("Franchezinha");
-//        placeholderInformation.add("Pierogis");
-//        placeholderInformation.add("Pancakes");
-//        placeholderInformation.add("Beer Cake");
-//        placeholderInformation.add("Junk Food Special");
-//
-//
-//
-//        RecyclerViewAdapter adapter = new RecyclerViewAdapter(placeholderInformation,this);
-//        recyclerView.setAdapter(adapter);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-//
-//
-//
-//    }
+    private void initRecyclerView(){
+        RecyclerView recyclerView = findViewById(R.id.content_recyclerView_main);
+        final ArrayList<String> placeholderInformation = new ArrayList<>();
+
+        String curl  = "https://just-cook-ba441.firebaseio.com/recipes/name.json";
+
+
+        //https://just-cook-ba441.firebaseio.com/recipes/name.json
+
+        placeholderInformation.add("Franchezinha");
+        placeholderInformation.add("Pierogis");
+        placeholderInformation.add("Pancakes");
+        placeholderInformation.add("Beer Cake");
+
+
+
+
+        placeholderInformation.add("Junk Food Special");
+
+
+
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(placeholderInformation,this);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+
+
+    }
 
 
 
     private void fetchJson() {
-
+        RecyclerView recyclerView = findViewById(R.id.content_recyclerView_main);
         final ArrayList<String> placeholderInformation = new ArrayList<>();
         final FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
 //        if (isInternetConnection()) {
@@ -147,15 +151,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     Log.d("OKhttp",body);
                     Gson gson = new GsonBuilder().create();
 
+                    List<String> placeholderInformation = new ArrayList<>();
                     placeholderInformation.add(gson.fromJson(body,String.class));
-
-//                    RecyclerViewAdapter adapter = new RecyclerViewAdapter(placeholderInformation,this);
-//                    recyclerView.setAdapter(adapter);
-//                    recyclerView.setLayoutManager(new LinearLayoutManager(this));
                 }
 
             }
 
+
+//        } else {
+//            Toast.makeText(this,"You don't have Internet Connection!",Toast.LENGTH_LONG).show();
+//        }
 
         });
     }
