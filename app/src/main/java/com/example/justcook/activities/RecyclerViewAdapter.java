@@ -1,6 +1,7 @@
 package com.example.justcook.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,9 +16,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.justcook.R;
-import com.google.firebase.database.FirebaseDatabase;
+import com.example.justcook.model.Comment;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>{
@@ -51,6 +51,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             @Override
             public void onClick(View view) {
                 Toast.makeText(mContext,"Onclick",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(mContext,RecipeDetails.class);
+                intent.putExtra("value", "test");
+                mContext.startActivity(intent);
             }
         });
 
