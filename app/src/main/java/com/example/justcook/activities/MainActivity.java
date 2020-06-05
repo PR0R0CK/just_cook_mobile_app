@@ -37,9 +37,8 @@ import java.util.List;
 import static java.sql.DriverManager.println;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    List<RecipeBook> recipeBooks;
+    ArrayList<RecipeBook> recipeBooks = new ArrayList<>();
 
-    //TODO: utworzenie Data Class "Recipe"
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +52,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
 
         getRecipes();
-        initRecyclerView();
+        ArrayList<RecipeBook> test = new ArrayList<>();
+        //TODO: metoda getRecipes powinna zwracać ArrayList. Zamiana zmiennej test, na zwracaną listę sprawi, że recyclerView zapełni się wartościami z bazy
+        test.add(new RecipeBook("userId","recipeId","name","type","picture","ingredients","recipe","difficulty","rate"));
+        test.add(new RecipeBook("userId2","recipeId2","name2","type2","picture2","ingredients2","recipe2","difficulty2","rate2"));
+        initRecyclerView(test);
 
     }
 
@@ -81,7 +84,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 recipeBooks = gson.fromJson(body, listType);
 
 //                List<RecipeBook> recipeBooks = new Gson().fromJson()
-                Log.d("ShowFood ",recipeBooks.get(5).getName());
+                Log.d("ShowFood ",recipeBooks.get(0).toString());
+                Log.d("ShowFood ", String.valueOf(recipeBooks.size()));
             }
         });
     }
@@ -124,25 +128,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    private void initRecyclerView(){
+    private void initRecyclerView(ArrayList<RecipeBook> t){
         RecyclerView recyclerView = findViewById(R.id.content_recyclerView_main);
-        final ArrayList<String> placeholderInformation = new ArrayList<>();
-//
-//        String body = "";
-//        String url  = "https://just-cook-ba441.firebaseio.com/recipes.json";
-//        Gson gson = new GsonBuilder().create();
-//        RecipeBook recipeBook = gson.fromJson(url,RecipeBook.class);
-
-        placeholderInformation.add("Franchezinha");
-        placeholderInformation.add("Pierogis");
-        placeholderInformation.add("Pancakes");
-        placeholderInformation.add("Beer Cake");
-
-//        placeholderInformation.add(recipeBook.getName());
-
-        placeholderInformation.add("Junk Food Special");
-
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(placeholderInformation,this);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(t,this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 

@@ -17,17 +17,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.justcook.R;
 import com.example.justcook.model.Comment;
+import com.example.justcook.model.RecipeBook;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>{
     private static final String TAG = "RecyclerViewAdapter";
 
-    private ArrayList<String> placeholderInformation = new ArrayList<>();
+    ArrayList<RecipeBook> recipes = new ArrayList<>();
     Context mContext;
 
-    public RecyclerViewAdapter(ArrayList<String> placeholderInformation, Context mContext) {
-        this.placeholderInformation = placeholderInformation;
+    public RecyclerViewAdapter(ArrayList<RecipeBook> placeholderInformation, Context mContext) {
+        this.recipes = placeholderInformation;
         this.mContext = mContext;
     }
 
@@ -42,10 +44,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Log.d("onbind", "onbind called");
-        holder.recipeRating.setText("5");
-        holder.recipeType.setText("Dessert");
-        holder.recipeAuthor.setText("Ulaniec");
-        holder.recipeTitle.setText(placeholderInformation.get(position));
+        RecipeBook recipe = recipes.get(position);
+        holder.recipeRating.setText(recipe.getRate());
+        holder.recipeType.setText(recipe.getType());
+        holder.recipeAuthor.setText(recipe.getUserId());
+        holder.recipeTitle.setText(recipe.getName());
         if(position%2==1) holder.parentLayout.setBackgroundColor(Color.parseColor("#F8033101"));
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,7 +65,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public int getItemCount() {
-        return placeholderInformation.size();
+        return recipes.size();
     }
 
 
