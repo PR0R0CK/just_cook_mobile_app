@@ -94,11 +94,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void initRecyclerView(){
         RecyclerView recyclerView = findViewById(R.id.content_recyclerView_main);
         final ArrayList<String> placeholderInformation = new ArrayList<>();
-
-//        String body = new Response().body().string();
-        String url  = "https://just-cook-ba441.firebaseio.com/recipes.json";
-        Gson gson = new GsonBuilder().create();
-        RecipeBook recipeBook = gson.fromJson(url,RecipeBook.class);
+//
+//        String body = "";
+//        String url  = "https://just-cook-ba441.firebaseio.com/recipes.json";
+//        Gson gson = new GsonBuilder().create();
+//        RecipeBook recipeBook = gson.fromJson(url,RecipeBook.class);
 
         placeholderInformation.add("Franchezinha");
         placeholderInformation.add("Pierogis");
