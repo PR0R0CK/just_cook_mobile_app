@@ -25,4 +25,25 @@
         <item name="android:textSize">18dp</item>
     </style>
 
+    <style name="new_linearLayout_input">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_marginStart">25dp</item>
+        <item name="android:layout_marginEnd">25dp</item>
+        <item name="android:background">@drawable/rounded_button</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:padding">8dp</item>
+    </style>
+
+    <style name="new_editText_input">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">0dp</item>
+        <item name="android:background">@drawable/rounded_edittext_register</item>
+        <item name="android:ems">10</item>
+        <item name="android:inputType">textPersonName</item>
+        <item name="android:padding">6dp</item>
+        <item name="android:textSize">14dp</item>
+    </style>
+
 </resources>
