@@ -42,7 +42,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Log.d("onbind", "onbind called");
-        RecipeBook recipe = recipes.get(position);
+        final RecipeBook recipe = recipes.get(position);
         holder.recipeRating.setText(recipe.getRate());
         holder.recipeType.setText(recipe.getType());
         holder.recipeAuthor.setText(recipe.getUserId());
@@ -53,7 +53,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             public void onClick(View view) {
                 Toast.makeText(mContext,"Onclick",Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(mContext, RecipeDetailsActivity.class);
-                intent.putExtra("value", "test");
+                intent.putExtra("userId", recipe.getUserId());
+                intent.putExtra("recipeId", recipe.getRecipeId());
+                intent.putExtra("name", recipe.getName());
+                intent.putExtra("type", recipe.getType());
+                intent.putExtra("picture", recipe.getPicture());
+                intent.putExtra("ingredients", recipe.getIngredients());
+                intent.putExtra("userId", recipe.getUserId());
+                intent.putExtra("recipe", recipe.getRecipe());
+                intent.putExtra("difficulty", recipe.getDifficulty());
+                intent.putExtra("rate", recipe.getRate());
                 mContext.startActivity(intent);
             }
         });
