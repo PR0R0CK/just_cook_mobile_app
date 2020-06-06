@@ -27,6 +27,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,6 +36,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText etUsername,etEmail,etPassword;
     private FirebaseAuth mAuth;
     private FirebaseDatabase mDatabase;
+    ArrayList<RecipeBook> recipesBook = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,7 @@ public class RegisterActivity extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance();
 
         saveRecipeToFirebaseDatabase();
+//        addRecipesToFirebase();
 
         findViewById(R.id.register_button_register).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,36 +136,25 @@ public class RegisterActivity extends AppCompatActivity {
                 });
     }
 
+
+    private void addRecipeToFirebaseDatabase(RecipeBook recipeBook){
+        DatabaseReference ref = mDatabase.getReference("/recipes");
+        String recipeId = ref.push().getKey();
+
+        recipeBook.setRecipeId(recipeId);
+        recipesBook.add(recipeBook);
+        ref.setValue(recipesBook);
+    }
+
     private void saveRecipeToFirebaseDatabase() {
         String userId = FirebaseAuth.getInstance().getUid();
-//        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("/recipes/"+)
-        DatabaseReference ref = mDatabase.getReference("/recipes");
 
-        Map<String, RecipeBook> recipesBook = new HashMap<>();
-        recipesBook.put("0",new RecipeBook(userId,"0", "Żur","Zupa","zdjZupy","jajko,kiełbasa,woda","Pokroic jajko i kelbase, wlac wode","łatwe","5"));
-        recipesBook.put("1",new RecipeBook(userId,"1","Żurek","Zupa","zdjZupy","jajko,kiełbasa,woda","Pokroic jajko i kelbase, wlac wode","łatwe","5"));
-        recipesBook.put("2",new RecipeBook(userId,"2","Mur","Drugie danie","zdj","jajko,kiełbasa,woda","Pokroic jajko i kelbase, wlac wode","łatwe","5"));
-        recipesBook.put("3",new RecipeBook(userId,"3","Murek","Drugie danie","zdj","jajko,kiełbasa,woda","Pokroic jajko i kelbase, wlac wode","łatwe","5"));
-        recipesBook.put("4",new RecipeBook(userId,"4","Siur","Deser","zdj","jajko,kiełbasa,woda","Pokroic jajko i kelbase, wlac wode","trudne","5"));
-        recipesBook.put("5",new RecipeBook(userId,"5","Siurek","Deser","zdj","jajko,kiełbasa,woda","Pokroic jajko i kelbase, wlac wode","trudne","5"));
-//        RecipeBook recipesBook = new RecipeBook(userId,"2","Żurekkkkkk","zdjZupy","jajko,kiełbasa,woda","Pokroic jajko i kelbase, wlac wode","łatwe","5");
-        ref.setValue(recipesBook);
+        addRecipeToFirebaseDatabase(new RecipeBook(userId,"0", "Żur","Zupa","zdjZupy","jajko,kiełbasa,woda","Pokroic jajko i kelbase, wlac wode","łatwe","5"));
+        addRecipeToFirebaseDatabase(new RecipeBook(userId,"1","Żurek","Zupa","zdjZupy","jajko,kiełbasa,woda","Pokroic jajko i kelbase, wlac wode","łatwe","5"));
+        addRecipeToFirebaseDatabase(new RecipeBook(userId,"2","Mur","Drugie danie","zdj","jajko,kiełbasa,woda","Pokroic jajko i kelbase, wlac wode","łatwe","5"));
+        addRecipeToFirebaseDatabase(new RecipeBook(userId,"3","Murek","Drugie danie","zdj","jajko,kiełbasa,woda","Pokroic jajko i kelbase, wlac wode","łatwe","5"));
+        addRecipeToFirebaseDatabase(new RecipeBook(userId,"4","Siur","Deser","zdj","jajko,kiełbasa,woda","Pokroic jajko i kelbase, wlac wode","trudne","5"));
+        addRecipeToFirebaseDatabase(new RecipeBook(userId,"5","Siurek","Deser","zdj","jajko,kiełbasa,woda","Pokroic jajko i kelbase, wlac wode","trudne","5"));
 
-        Toast.makeText(RegisterActivity.this,"Stworzono przepis",Toast.LENGTH_SHORT);
-
-        //dwonloading data
-        ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                RecipeBook recBook = dataSnapshot.getValue(RecipeBook.class);
-//                Log.d("Download",recBook.toString());
-//                System.out.println(recBook.getName());
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-//                System.out.println("The read failed: " + databaseError.getCode());
-            }
-        });
     }
 }
