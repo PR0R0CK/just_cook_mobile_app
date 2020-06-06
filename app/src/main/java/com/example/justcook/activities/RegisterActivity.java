@@ -52,8 +52,7 @@ public class RegisterActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance();
 
-        saveRecipeToFirebaseDatabase();
-//        addRecipesToFirebase();
+//        saveRecipeToFirebaseDatabase();
 
         findViewById(R.id.register_button_register).setOnClickListener(new View.OnClickListener() {
             @Override

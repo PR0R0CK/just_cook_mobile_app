@@ -16,11 +16,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.justcook.R;
-import com.example.justcook.model.Comment;
 import com.example.justcook.model.RecipeBook;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>{
     private static final String TAG = "RecyclerViewAdapter";
@@ -54,7 +52,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             @Override
             public void onClick(View view) {
                 Toast.makeText(mContext,"Onclick",Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(mContext,RecipeDetails.class);
+                Intent intent = new Intent(mContext, RecipeDetailsActivity.class);
                 intent.putExtra("value", "test");
                 mContext.startActivity(intent);
             }

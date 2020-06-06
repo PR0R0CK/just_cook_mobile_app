@@ -14,38 +14,38 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.justcook.R;
-import com.example.justcook.model.Comment;
+import com.example.justcook.model.Commentary;
 
 import java.util.ArrayList;
 
-public class RecipeDetails extends AppCompatActivity {
+public class RecipeDetailsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_details);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-        ArrayList<Comment> comments = new ArrayList<>();
-        comments.add(new Comment("User1","Comment1","1"));
-        comments.add(new Comment("User2","Comment2","1"));
-        comments.add(new Comment("User1","Comment1","1"));
-        comments.add(new Comment("User2","Comment2","1"));
-        comments.add(new Comment("User1","Comment1","1"));
-        comments.add(new Comment("User2","Comment2","1"));
-        comments.add(new Comment("User1","Comment1","1"));
-        comments.add(new Comment("User2","Comment2","1"));
-        comments.add(new Comment("User1","Comment1","1"));
-        comments.add(new Comment("User2","Comment2","1"));
-        comments.add(new Comment("User1","Comment1","1"));
-        comments.add(new Comment("User2","Comment2","1"));
-        comments.add(new Comment("User1","Comment1","1"));
-        comments.add(new Comment("User2","Comment2","1"));
-        comments.add(new Comment("User1","Comment1","1"));
-        comments.add(new Comment("User2","Comment2","1"));
+        ArrayList<Commentary> comments = new ArrayList<>();
+        comments.add(new Commentary("User1","Comment1","1"));
+        comments.add(new Commentary("User2","Comment2","1"));
+        comments.add(new Commentary("User1","Comment1","1"));
+        comments.add(new Commentary("User2","Comment2","1"));
+        comments.add(new Commentary("User1","Comment1","1"));
+        comments.add(new Commentary("User2","Comment2","1"));
+        comments.add(new Commentary("User1","Comment1","1"));
+        comments.add(new Commentary("User2","Comment2","1"));
+        comments.add(new Commentary("User1","Comment1","1"));
+        comments.add(new Commentary("User2","Comment2","1"));
+        comments.add(new Commentary("User1","Comment1","1"));
+        comments.add(new Commentary("User2","Comment2","1"));
+        comments.add(new Commentary("User1","Comment1","1"));
+        comments.add(new Commentary("User2","Comment2","1"));
+        comments.add(new Commentary("User1","Comment1","1"));
+        comments.add(new Commentary("User2","Comment2","1"));
         initRecyclerView(comments);
 
     }
-    private void initRecyclerView(ArrayList<Comment> comments){
+    private void initRecyclerView(ArrayList<Commentary> comments){
         RecyclerView recyclerView = findViewById(R.id.comments_recyclerView_details);
         CommentRecyclerViewAdapter adapter = new CommentRecyclerViewAdapter(comments,this);
         recyclerView.setAdapter(adapter);

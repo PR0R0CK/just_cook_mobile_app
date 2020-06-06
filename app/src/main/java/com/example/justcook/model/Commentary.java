@@ -1,6 +1,16 @@
 package com.example.justcook.model;
 
-public class Comment {
+public class Commentary {
+    private String username;
+    private String comment;
+    private String recipeId;
+
+    public Commentary(String username, String comment, String recipeId) {
+        this.username = username;
+        this.comment = comment;
+        this.recipeId = recipeId;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -24,15 +34,4 @@ public class Comment {
     public void setRecipeId(String recipeId) {
         this.recipeId = recipeId;
     }
-
-    private String username;
-    private String comment;
-    private String recipeId;
-
-    public Comment(String username, String comment, String recipeId) {
-        this.username = username;
-        this.comment = comment;
-        this.recipeId = recipeId;
-    }
-
 }

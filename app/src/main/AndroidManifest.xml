@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity android:name=".activities.NewRecipeActivity"></activity>
-        <activity android:name=".activities.RecipeDetails" />
+        <activity android:name=".activities.RecipeDetailsActivity" />
         <activity android:name=".activities.MainActivity" />
         <activity android:name=".activities.ConfirmationActivity" />
         <activity android:name=".activities.LoginActivity" />
