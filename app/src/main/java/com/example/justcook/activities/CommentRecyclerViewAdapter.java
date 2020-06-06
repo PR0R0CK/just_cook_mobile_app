@@ -1,9 +1,11 @@
 package com.example.justcook.activities;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -36,6 +38,8 @@ public class CommentRecyclerViewAdapter extends RecyclerView.Adapter<CommentRecy
         Comment comment = comments.get(position);
         holder.username.setText(comment.getUsername());
         holder.comment.setText(comment.getComment());
+        if(position%2==1) holder.parentLayout.setBackgroundColor(Color.parseColor("#F8033101"));
+
     }
 
     @Override
@@ -46,10 +50,12 @@ public class CommentRecyclerViewAdapter extends RecyclerView.Adapter<CommentRecy
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView username;
         TextView comment;
+        LinearLayout parentLayout;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             username = itemView.findViewById(R.id.user_textView_comment);
             comment = itemView.findViewById(R.id.comment_textView_comment);
+            parentLayout = itemView.findViewById(R.id.parentLayout_comment);
         }
     }
 }
