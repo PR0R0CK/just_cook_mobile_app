@@ -10,10 +10,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import android.content.Intent;
 import android.os.Bundle;
 import okhttp3.*;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
 import com.example.justcook.R;
@@ -123,4 +128,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+    public void openNewRecipe(View view) {
+        Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake);
+        view.startAnimation(shake);
+        Intent intent = new Intent(this, NewRecipeActivity.class);
+        startActivity(intent);
+    }
 }
