@@ -12,15 +12,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.justcook.R;
-import com.example.justcook.model.Comment;
+import com.example.justcook.model.Commentary;
 
 import java.util.ArrayList;
 
 public class CommentRecyclerViewAdapter extends RecyclerView.Adapter<CommentRecyclerViewAdapter.ViewHolder> {
-    private ArrayList<Comment> comments = new ArrayList<>();
+    private ArrayList<Commentary> comments = new ArrayList<>();
     Context mContext;
 
-    public CommentRecyclerViewAdapter(ArrayList<Comment> commentList, Context mContext) {
+    public CommentRecyclerViewAdapter(ArrayList<Commentary> commentList, Context mContext) {
         this.comments = commentList;
         this.mContext = mContext;
     }
@@ -35,7 +35,7 @@ public class CommentRecyclerViewAdapter extends RecyclerView.Adapter<CommentRecy
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Comment comment = comments.get(position);
+        Commentary comment = comments.get(position);
         holder.username.setText(comment.getUsername());
         holder.comment.setText(comment.getComment());
         if(position%2==1) holder.parentLayout.setBackgroundColor(Color.parseColor("#F8033101"));
