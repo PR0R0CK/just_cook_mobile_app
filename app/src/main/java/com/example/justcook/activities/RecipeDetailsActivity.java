@@ -41,6 +41,8 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class RecipeDetailsActivity extends AppCompatActivity {
     private FirebaseDatabase mDatabase;
@@ -97,19 +99,24 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         );
 
 
-        TextView recipeName = findViewById(R.id.title_textView_details);
-        recipeName.setText(recipe.getName());
-
-        //DODANIE SKŁADNIKÓW I KROKÓW PRZEPISU
-        //KAŻDE UŻYCIE FUNKCJI DODAJE 1 TEXTVIEW Z 1 SKŁADNIKIEM / 1 KROKIEM PRZEPISU
-        appendIngredient(recipe.getIngredients());
-        appendIngredient("drugi składnik");
-        appendIngredient("trzeci skladnik hop hop hop");
-        appendStep(recipe.getRecipe());
-        appendStep("drugi krok");
-
-
+        ((TextView) findViewById(R.id.title_textView_details)).setText(recipe.getName());
+        //DODANIE SKŁADNIKÓW I KROKÓW DO ODPOWIADAJĄCYCH IM LAYOUTÓW
+        insertDetails(recipe.getIngredients(),recipe.getRecipe());
     }
+
+    private void insertDetails(String ingredients, String recipe) {
+        String databaseDelimiter = getString(R.string.databaseDelimiter);
+        String[] ingr = ingredients.split(databaseDelimiter);
+        String[] steps = recipe.split(databaseDelimiter);
+        Log.d("Test: ",ingr[0]);
+        for(int i=0; i<ingr.length; i++){
+            appendIngredient(ingr[i]);
+        }
+        for(int i=0; i<steps.length; i++){
+            appendStep(steps[i]);
+        }
+    }
+
     private void initRecyclerView(ArrayList<Commentary> comments){
         RecyclerView recyclerView = findViewById(R.id.comments_recyclerView_details);
         CommentRecyclerViewAdapter adapter = new CommentRecyclerViewAdapter(comments,this);

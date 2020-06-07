@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.RecipeDetailsActivity">
+    tools:context=".activities.NewRecipeActivity">
 
     <ScrollView
         android:id="@+id/content_scrollView_new"
@@ -35,14 +35,7 @@
 
             <LinearLayout
                 android:id="@+id/ingreduints_linearLayout_new"
-                style="@style/new_linearLayout_input">
-
-                <EditText
-                    android:id="@+id/editText2"
-                    style="@style/new_editText_input"
-                    android:hint="Ingredient" />
-
-            </LinearLayout>
+                style="@style/new_linearLayout_input"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -57,6 +50,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/rounded_edittext_register"
                     android:text="+"
+                    android:onClick="ingredientAddCenter"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -66,7 +60,10 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_weight="1"
+                    android:alpha="0"
                     android:background="@drawable/rounded_edittext_register"
+                    android:enabled="false"
+                    android:onClick="ingredientAddLeft"
                     android:text="-"
                     app:layout_constraintEnd_toStartOf="@+id/ingredient_center_plus"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -76,7 +73,10 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_weight="1"
+                    android:alpha="0"
                     android:background="@drawable/rounded_edittext_register"
+                    android:enabled="false"
+                    android:onClick="ingredientAddRight"
                     android:text="+"
                     app:layout_constraintStart_toEndOf="@+id/ingredient_center_plus"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -96,20 +96,11 @@
                 android:textStyle="bold" />
 
             <LinearLayout
+                android:id="@+id/steps_linearLayout_new"
                 style="@style/new_linearLayout_input"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <EditText
-                    android:id="@+id/editText10"
-                    style="@style/new_editText_input"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:hint="Step"
-                    android:inputType="textPersonName" />
-            </LinearLayout>
+                android:orientation="vertical"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -123,6 +114,7 @@
                     android:layout_height="40dp"
                     android:background="@drawable/rounded_edittext_register"
                     android:text="+"
+                    android:onClick="stepAddCenter"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -131,7 +123,9 @@
                     android:id="@+id/steps_right_plus"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
+                    android:alpha="0"
                     android:background="@drawable/rounded_edittext_register"
+                    android:onClick="stepAddRight"
                     android:text="+"
                     app:layout_constraintStart_toEndOf="@+id/steps_center_plus"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -140,11 +134,28 @@
                     android:id="@+id/steps_left_minus"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
+                    android:alpha="0"
                     android:background="@drawable/rounded_edittext_register"
+                    android:onClick="stepAddLeft"
                     android:text="-"
                     app:layout_constraintEnd_toStartOf="@+id/steps_center_plus"
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <Button
+                android:id="@+id/send_button_new"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="50dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/rounded_button"
+                android:text="ADD RECIPE"
+                android:onClick="addNewRecipeToDatabase"
+                android:textColor="@android:color/white"
+                android:textSize="22dp"
+                android:textStyle="bold" />
 
         </LinearLayout>
     </ScrollView>
@@ -166,9 +177,10 @@
             android:background="@drawable/rounded_edittext_register"
             android:ems="10"
             android:hint="Name of the recipe"
+            android:digits="abcdefghijklmnopqrstuvwxyz ()QWERTYUIOPLKJHGFDSAZXCVBNM"
             android:inputType="textPersonName"
             android:padding="8dp"
-            android:textColor="@android:color/white"
+            android:textColor="@android:color/black"
             android:textColorHint="@android:color/darker_gray" />
 
         <Spinner

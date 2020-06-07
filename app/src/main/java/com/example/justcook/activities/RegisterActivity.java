@@ -148,7 +148,7 @@ public class RegisterActivity extends AppCompatActivity {
     private void saveRecipeToFirebaseDatabase() {
 
         User userId = new User("UC3Gv7lpS9RKcWSkF256UayfrwJ9","hop_hop_hop","3xhop@hop.com");
-        addRecipeToFirebaseDatabase(new RecipeBook(userId,"0", "Żur","Zupa","zdjZupy","jajko,kiełbasa,woda","Pokroic jajko i kelbase, wlac wode","łatwe","5"));
+        addRecipeToFirebaseDatabase(new RecipeBook(userId,"0", "Boiled water","Soup","zdjZupy","Water;(Optional) Salt","Boil water;Add salt to taste","Challenging","69"));
         addRecipeToFirebaseDatabase(new RecipeBook(userId,"1","Żurek","Zupa","zdjZupy","jajko,kiełbasa,woda","Pokroic jajko i kelbase, wlac wode","łatwe","5"));
         addRecipeToFirebaseDatabase(new RecipeBook(userId,"2","Mur","Drugie danie","zdj","jajko,kiełbasa,woda","Pokroic jajko i kelbase, wlac wode","łatwe","5"));
         addRecipeToFirebaseDatabase(new RecipeBook(userId,"3","Murek","Drugie danie","zdj","jajko,kiełbasa,woda","Pokroic jajko i kelbase, wlac wode","łatwe","5"));
