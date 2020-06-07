@@ -45,7 +45,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         final RecipeBook recipe = recipes.get(position);
         holder.recipeRating.setText(recipe.getRate());
         holder.recipeType.setText(recipe.getType());
-        holder.recipeAuthor.setText(recipe.getUserId());
+        holder.recipeAuthor.setText(recipe.getUser().getUsername());
         holder.recipeTitle.setText(recipe.getName());
         if(position%2==1) holder.parentLayout.setBackgroundColor(Color.parseColor("#F8033101"));
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
@@ -53,13 +53,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             public void onClick(View view) {
                 Toast.makeText(mContext,"Onclick",Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(mContext, RecipeDetailsActivity.class);
-                intent.putExtra("userId", recipe.getUserId());
+                intent.putExtra("userId", recipe.getUser().getUsername());
                 intent.putExtra("recipeId", recipe.getRecipeId());
                 intent.putExtra("name", recipe.getName());
                 intent.putExtra("type", recipe.getType());
                 intent.putExtra("picture", recipe.getPicture());
                 intent.putExtra("ingredients", recipe.getIngredients());
-                intent.putExtra("userId", recipe.getUserId());
+                intent.putExtra("userId", recipe.getUser().getUsername());
                 intent.putExtra("recipe", recipe.getRecipe());
                 intent.putExtra("difficulty", recipe.getDifficulty());
                 intent.putExtra("rate", recipe.getRate());

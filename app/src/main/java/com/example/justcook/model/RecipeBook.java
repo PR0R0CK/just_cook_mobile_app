@@ -3,20 +3,20 @@ package com.example.justcook.model;
 import com.google.firebase.database.DatabaseReference;
 
 public class RecipeBook {
-    private String userId;
+    private User user;
     private String recipeId;
     private String name;
-
     private String type;
-
     private String picture;
     private String ingredients;
     private String recipe;
     private String difficulty;
     private String rate;
+
     public RecipeBook(){}
-    public RecipeBook(String userId, String recipeId, String name, String type, String picture, String ingredients, String recipe, String difficulty, String rate) {
-        this.userId = userId;
+
+    public RecipeBook(User user, String recipeId, String name, String type, String picture, String ingredients, String recipe, String difficulty, String rate) {
+        this.user = user;
         this.recipeId = recipeId;
         this.name = name;
         this.type = type;
@@ -27,12 +27,12 @@ public class RecipeBook {
         this.rate = rate;
     }
 
-    public String getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getRecipeId() {
@@ -97,18 +97,5 @@ public class RecipeBook {
 
     public void setRate(String rate) {
         this.rate = rate;
-    }
-
-    @Override
-    public String toString() {
-        return "RecipeBook{" +
-                "userId='" + userId + '\'' +
-                ", recipeId='" + recipeId + '\'' +
-                ", picture='" + picture + '\'' +
-                ", ingredients='" + ingredients + '\'' +
-                ", recipe='" + recipe + '\'' +
-                ", difficulty='" + difficulty + '\'' +
-                ", rate='" + rate + '\'' +
-                '}';
     }
 }

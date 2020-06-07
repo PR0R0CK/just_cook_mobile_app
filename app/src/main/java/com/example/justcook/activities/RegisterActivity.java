@@ -52,7 +52,7 @@ public class RegisterActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance();
 
-//        saveRecipeToFirebaseDatabase();
+        saveRecipeToFirebaseDatabase();
 
         findViewById(R.id.register_button_register).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,14 +146,13 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void saveRecipeToFirebaseDatabase() {
-        String userId = FirebaseAuth.getInstance().getUid();
 
+        User userId = new User("UC3Gv7lpS9RKcWSkF256UayfrwJ9","hop_hop_hop","3xhop@hop.com");
         addRecipeToFirebaseDatabase(new RecipeBook(userId,"0", "Żur","Zupa","zdjZupy","jajko,kiełbasa,woda","Pokroic jajko i kelbase, wlac wode","łatwe","5"));
         addRecipeToFirebaseDatabase(new RecipeBook(userId,"1","Żurek","Zupa","zdjZupy","jajko,kiełbasa,woda","Pokroic jajko i kelbase, wlac wode","łatwe","5"));
         addRecipeToFirebaseDatabase(new RecipeBook(userId,"2","Mur","Drugie danie","zdj","jajko,kiełbasa,woda","Pokroic jajko i kelbase, wlac wode","łatwe","5"));
         addRecipeToFirebaseDatabase(new RecipeBook(userId,"3","Murek","Drugie danie","zdj","jajko,kiełbasa,woda","Pokroic jajko i kelbase, wlac wode","łatwe","5"));
         addRecipeToFirebaseDatabase(new RecipeBook(userId,"4","Siur","Deser","zdj","jajko,kiełbasa,woda","Pokroic jajko i kelbase, wlac wode","trudne","5"));
         addRecipeToFirebaseDatabase(new RecipeBook(userId,"5","Siurek","Deser","zdj","jajko,kiełbasa,woda","Pokroic jajko i kelbase, wlac wode","trudne","5"));
-
     }
 }

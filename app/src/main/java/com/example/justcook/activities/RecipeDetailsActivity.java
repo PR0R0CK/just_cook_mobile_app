@@ -1,14 +1,21 @@
 package com.example.justcook.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -21,16 +28,31 @@ import android.widget.Toast;
 import com.example.justcook.R;
 import com.example.justcook.model.Commentary;
 import com.example.justcook.model.RecipeBook;
+import com.example.justcook.model.User;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
+import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class RecipeDetailsActivity extends AppCompatActivity {
+    private FirebaseDatabase mDatabase;
+    private ArrayList<RecipeBook> recipesBook = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_details);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        mDatabase = FirebaseDatabase.getInstance();
+
         //PLACEHOLDER KOMENTARZY
         ArrayList<Commentary> comments = new ArrayList<>();
         comments.add(new Commentary("User1","Comment1","1"));
@@ -57,16 +79,21 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         ////////////////////////////////////////
         Intent intent = getIntent();
         RecipeBook recipe = new RecipeBook(
-                intent.getStringExtra("userId"),
-                intent.getStringExtra("recipeId"),
-                intent.getStringExtra("name"),
-                intent.getStringExtra("type"),
-                intent.getStringExtra("picture"),
-                intent.getStringExtra("ingredients"),
-                intent.getStringExtra("recipe"),
-                intent.getStringExtra("difficulty"),
-                intent.getStringExtra("rate")
+
         );
+        //TODO: zmienic przekazywanie
+//        RecipeBook recipe = new RecipeBook(
+//                intent.getStringExtra("userId"),
+//                intent.getStringExtra("recipeId"),
+//                intent.getStringExtra("name"),
+//                intent.getStringExtra("type"),
+//                intent.getStringExtra("picture"),
+//                intent.getStringExtra("ingredients"),
+//                intent.getStringExtra("recipe"),
+//                intent.getStringExtra("difficulty"),
+//                intent.getStringExtra("rate")
+//        );
+
 
         TextView recipeName = findViewById(R.id.title_textView_details);
         recipeName.setText(recipe.getName());
