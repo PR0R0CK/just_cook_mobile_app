@@ -53,7 +53,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             public void onClick(View view) {
                 Toast.makeText(mContext,"Onclick",Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(mContext, RecipeDetailsActivity.class);
-                intent.putExtra("userId", recipe.getUser().getUsername());
+                intent.putExtra("userId",recipe.getUser().getUserId());
+                intent.putExtra("username", recipe.getUser().getUsername());
+                intent.putExtra("email",recipe.getUser().getEmail());
                 intent.putExtra("recipeId", recipe.getRecipeId());
                 intent.putExtra("name", recipe.getName());
                 intent.putExtra("type", recipe.getType());

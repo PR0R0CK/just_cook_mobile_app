@@ -78,21 +78,23 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         //ODEBRANIE INFORMACJI O PRZEPISIE
         ////////////////////////////////////////
         Intent intent = getIntent();
-        RecipeBook recipe = new RecipeBook(
-
+        User user = new User(
+                intent.getStringExtra("userId"),
+                intent.getStringExtra("username"),
+                intent.getStringExtra("email")
         );
-        //TODO: zmienic przekazywanie
-//        RecipeBook recipe = new RecipeBook(
-//                intent.getStringExtra("userId"),
-//                intent.getStringExtra("recipeId"),
-//                intent.getStringExtra("name"),
-//                intent.getStringExtra("type"),
-//                intent.getStringExtra("picture"),
-//                intent.getStringExtra("ingredients"),
-//                intent.getStringExtra("recipe"),
-//                intent.getStringExtra("difficulty"),
-//                intent.getStringExtra("rate")
-//        );
+
+        RecipeBook recipe = new RecipeBook(
+                user,
+                intent.getStringExtra("recipeId"),
+                intent.getStringExtra("name"),
+                intent.getStringExtra("type"),
+                intent.getStringExtra("picture"),
+                intent.getStringExtra("ingredients"),
+                intent.getStringExtra("recipe"),
+                intent.getStringExtra("difficulty"),
+                intent.getStringExtra("rate")
+        );
 
 
         TextView recipeName = findViewById(R.id.title_textView_details);
@@ -102,6 +104,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         //KAŻDE UŻYCIE FUNKCJI DODAJE 1 TEXTVIEW Z 1 SKŁADNIKIEM / 1 KROKIEM PRZEPISU
         appendIngredient(recipe.getIngredients());
         appendIngredient("drugi składnik");
+        appendIngredient("trzeci skladnik hop hop hop");
         appendStep(recipe.getRecipe());
         appendStep("drugi krok");
 
