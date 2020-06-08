@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.example.justcook.R;
 import com.example.justcook.model.RecipeBook;
 import com.example.justcook.model.User;
+import com.example.justcook.service.FirebaseDatabaseConnector;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -52,7 +53,8 @@ public class RegisterActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance();
 
-        saveRecipeToFirebaseDatabase();
+//        saveRecipeToFirebaseDatabase();
+
 
         findViewById(R.id.register_button_register).setOnClickListener(new View.OnClickListener() {
             @Override

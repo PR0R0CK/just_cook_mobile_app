@@ -18,8 +18,17 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.justcook.R;
+import com.example.justcook.model.RecipeBook;
+import com.example.justcook.model.User;
+import com.example.justcook.service.FirebaseDatabaseConnector;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.List;
 
 public class NewRecipeActivity extends AppCompatActivity {
+    private FirebaseDatabase mDatabase;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +47,7 @@ public class NewRecipeActivity extends AppCompatActivity {
 
 //        ingredientAddCenter(findViewById(R.id.ingredient_center_plus));
 //        stepAddCenter(findViewById(R.id.steps_center_plus));
+        mDatabase = FirebaseDatabase.getInstance();
 
 
     }
@@ -165,8 +175,27 @@ public class NewRecipeActivity extends AppCompatActivity {
             //AREK, JAK CHCESZ DODAWAĆ DO BAZY TO W TYM MIEJSCU
             //vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 
+            User user = new User("UC3Gv7lpS9RKcWSkF256UayfrwJ9","hop_hop_hop","3xhop@hop.com");
+            addRecipeToFirebaseDatabase(new RecipeBook(user,"0", recipeName,recipeType,"pic",
+                    recipeIngredients,recipeSteps,recipeDifficulty,"0"));
+
             //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         }
 
     }
+
+    private void addRecipeToFirebaseDatabase(RecipeBook recipeBook){
+
+
+
+        DatabaseReference ref = mDatabase.getReference("/recipes");
+        String recipeId = ref.push().getKey();
+
+        recipeBook.setRecipeId(recipeId);
+//        ref.ge
+        ref.push().setValue(recipeBook);
+//        recipesBook.add(recipeBook);
+//        ref.setValue(recipesBook);
+    }
+
 }
