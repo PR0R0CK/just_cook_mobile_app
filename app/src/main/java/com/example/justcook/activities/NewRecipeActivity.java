@@ -146,8 +146,8 @@ public class NewRecipeActivity extends AppCompatActivity {
         String recipeName = ((EditText) findViewById(R.id.name_editText_new)).getText().toString();
         String recipeDifficulty = ((Spinner) findViewById(R.id.difficulty_spinner_new)).getSelectedItem().toString();
         String recipeType = ((Spinner) findViewById(R.id.type_spinner_new)).getSelectedItem().toString();
-        String recipeIngredients = new String();
-        String recipeSteps = new String();
+        String recipeIngredients = "";
+        String recipeSteps = "";
         //KONIEC GOTOWYCH DANYCH DO DODANIA^^^^^^
         LinearLayout ingredientLayout = findViewById(R.id.ingreduints_linearLayout_new);
         LinearLayout stepsLayout = findViewById(R.id.steps_linearLayout_new);
@@ -162,14 +162,12 @@ public class NewRecipeActivity extends AppCompatActivity {
                 recipeIngredients += ((EditText) ingredientLayout.getChildAt(i)).getText().toString();
                 recipeIngredients += databaseDelimiter;
             }
-            recipeIngredients = recipeIngredients.substring(0,recipeIngredients.length() -1);
             Log.d("Ingredients: ", recipeIngredients);
 
             for(int i=0; i< stepsLayout.getChildCount();i++){
                 recipeSteps += ((EditText) stepsLayout.getChildAt(i)).getText().toString();
                 recipeSteps += databaseDelimiter;
             }
-            recipeSteps = recipeSteps.substring(0,recipeIngredients.length() -1);
             Log.d("Steps: ", recipeSteps);
             //TODO: DODANIE WARTOŚCI DO BAZY
             //AREK, JAK CHCESZ DODAWAĆ DO BAZY TO W TYM MIEJSCU
