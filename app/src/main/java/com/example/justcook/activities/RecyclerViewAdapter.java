@@ -19,6 +19,7 @@ import com.example.justcook.R;
 import com.example.justcook.model.RecipeBook;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>{
     private static final String TAG = "RecyclerViewAdapter";
@@ -51,7 +52,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(mContext,"Onclick",Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(mContext, RecipeDetailsActivity.class);
                 intent.putExtra("userId",recipe.getUser().getUserId());
                 intent.putExtra("username", recipe.getUser().getUsername());

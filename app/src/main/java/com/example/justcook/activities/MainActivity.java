@@ -35,8 +35,10 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -155,8 +157,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Toast toast = Toast.makeText(getApplicationContext(), "Log out", Toast.LENGTH_SHORT);
             toast.show();
         } else if (id == R.id.nav_add_recipe) {
-            Toast toast = Toast.makeText(getApplicationContext(), "Add recipe", Toast.LENGTH_SHORT);
-            toast.show();
+            Intent intent = new Intent(this, NewRecipeActivity.class);
+            startActivity(intent);
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -164,6 +166,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void initRecyclerView(ArrayList<RecipeBook> t){
+        Collections.reverse(t);
         RecyclerView recyclerView = findViewById(R.id.content_recyclerView_main);
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(t,this);
         recyclerView.setAdapter(adapter);
