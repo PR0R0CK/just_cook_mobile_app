@@ -4,5 +4,6 @@
     style="@style/new_editText_input"
     android:hint="Ingredient"
     android:visibility="visible"
+    android:maxLength="50"
     android:digits="abcdefghijklmnopqrstuvwxyz1234567890 -,().QWERTYUIOPLKJHGFDSAZXCVBNM°"
     xmlns:android="http://schemas.android.com/apk/res/android" />

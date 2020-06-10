@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import okhttp3.Call;
@@ -14,6 +15,8 @@ import okhttp3.Response;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -21,6 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -186,5 +190,22 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         }else{
             super.onBackPressed();
         }
+    }
+
+    public void likeRecipe(View view) {
+        Button button = findViewById(R.id.like_button_details);
+        int likes = Integer.parseInt(String.valueOf(button.getText()));
+        //TODO: AKTUALIZACJA POLUBIEŃ W BAZIE, PIERWSZE - NOWE POLUBIENIE, DRUGIE - ANULOWANIE POLUBIENIA
+        if(button.getTag().equals("0")){
+            button.setText(String.valueOf(likes+1));
+            button.setCompoundDrawablesWithIntrinsicBounds(android.R.drawable.btn_star_big_on,0,0,0);
+            button.setTag("1");
+        }else if(button.getTag().equals("1")){
+            button.setText(String.valueOf(likes-1));
+            button.setCompoundDrawablesWithIntrinsicBounds(android.R.drawable.btn_star,0,0,0);
+            button.setTag("0");
+        }
+
+
     }
 }

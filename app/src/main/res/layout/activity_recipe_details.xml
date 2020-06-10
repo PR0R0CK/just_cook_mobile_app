@@ -48,18 +48,59 @@
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <TextView
-        android:id="@+id/title_textView_details"
+    <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorDarkGreen"
-        android:padding="4dp"
-        android:text="Franchezinha"
-        android:textAlignment="center"
-        android:textColor="@android:color/white"
-        android:textSize="26dp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/title_textView_details"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@color/colorDarkGreen"
+                android:paddingLeft="14dp"
+                android:paddingTop="8dp"
+                android:paddingRight="8dp"
+                android:paddingBottom="8dp"
+                android:text="Title"
+                android:textAlignment="textStart"
+                android:textColor="@android:color/white"
+                android:textSize="26dp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/like_button_details"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <Button
+                android:id="@+id/like_button_details"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/rounded_button_dark"
+                android:drawableLeft="@android:drawable/btn_star"
+                android:onClick="likeRecipe"
+                android:paddingLeft="4dp"
+                android:tag="0"
+                android:text="0"
+                android:textColor="@android:color/white"
+                android:textSize="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/comments_recyclerView_details"
@@ -91,7 +132,7 @@
         app:layout_constraintBottom_toTopOf="@+id/comments_toggle_details"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title_textView_details">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -136,13 +177,15 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="8dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="4dp"
                 android:layout_marginEnd="20dp"
                 android:background="@drawable/rounded_button"
-                android:orientation="vertical" />
+                android:orientation="vertical"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="4dp">
+
+            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>
