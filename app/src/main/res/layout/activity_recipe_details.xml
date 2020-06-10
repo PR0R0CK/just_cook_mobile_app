@@ -87,6 +87,8 @@
                 android:id="@+id/like_button_details"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="3dp"
                 android:background="@drawable/rounded_button_dark"
                 android:drawableLeft="@android:drawable/btn_star"
                 android:onClick="likeRecipe"
@@ -99,6 +101,22 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <Button
+            android:id="@+id/edit_button_details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginBottom="6dp"
+            android:onClick="editRecipe"
+            android:background="@drawable/rounded_button_dark"
+            android:text="edit recipe"
+            android:textColor="@android:color/white"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:visibility="gone" />
 
     </LinearLayout>
 

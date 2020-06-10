@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".activities.NewRecipeActivity"></activity>
+        <activity android:name=".activities.EditRecipeActivity"></activity>
+        <activity android:name=".activities.NewRecipeActivity" />
         <activity android:name=".activities.RecipeDetailsActivity" />
         <activity android:name=".activities.MainActivity" />
         <activity android:name=".activities.ConfirmationActivity" />

@@ -107,6 +107,9 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.title_textView_details)).setText(recipe.getName());
         //DODANIE SKŁADNIKÓW I KROKÓW DO ODPOWIADAJĄCYCH IM LAYOUTÓW
         insertDetails(recipe.getIngredients(),recipe.getRecipe());
+
+        //TODO: DODAĆ SPRAWDZANIE CZY OBECNY UŻYTKOWNIK JEST WŁAŚCICIELEM
+        enableEditing();
     }
 
     private void insertDetails(String ingredients, String recipe) {
@@ -207,5 +210,14 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         }
 
 
+    }
+    public void enableEditing(){
+        findViewById(R.id.edit_button_details).setVisibility(View.VISIBLE);
+    }
+
+    public void editRecipe(View view) {
+        Intent intent = new Intent(this, EditRecipeActivity.class);
+        //TODO: putExtra
+        startActivity(intent);
     }
 }
