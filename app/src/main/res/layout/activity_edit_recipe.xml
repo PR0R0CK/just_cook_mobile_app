@@ -6,13 +6,202 @@
     android:layout_height="match_parent"
     tools:context=".activities.EditRecipeActivity">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="*edytowanie*"
+    <ScrollView
+        android:id="@+id/content_scrollView_edit"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/name_linearLayout_edit"
+        tools:layout_editor_absoluteX="-16dp">
+
+        <LinearLayout
+            android:id="@+id/content_linearLayout_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/ingredients_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="20dp"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"
+                android:text="Ingredients:"
+                android:textColor="@android:color/white"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/ingreduints_linearLayout_edit"
+                style="@style/new_linearLayout_input"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:layout_weight="1">
+                <Button
+                    android:id="@+id/ingredient_center_plus_edit"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_edittext_register"
+                    android:text="+"
+                    android:onClick="ingredientAddCenter"
+                    android:alpha="0"
+                    android:enabled="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/ingredient_left_minus_edit"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:alpha="1"
+                    android:background="@drawable/rounded_edittext_register"
+                    android:enabled="true"
+                    android:onClick="ingredientAddLeft"
+                    android:text="-"
+                    app:layout_constraintEnd_toStartOf="@+id/ingredient_center_plus_edit"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/ingredient_right_plus_edit"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:alpha="1"
+                    android:background="@drawable/rounded_edittext_register"
+                    android:enabled="true"
+                    android:onClick="ingredientAddRight"
+                    android:text="+"
+                    app:layout_constraintStart_toEndOf="@+id/ingredient_center_plus_edit"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/steps_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="20dp"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"
+                android:text="Steps:"
+                android:textColor="@android:color/white"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/steps_linearLayout_edit"
+                style="@style/new_linearLayout_input"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:layout_weight="1">
+                <Button
+                    android:id="@+id/steps_center_plus_edit"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/rounded_edittext_register"
+                    android:text="+"
+                    android:alpha="0"
+                    android:enabled="false"
+                    android:onClick="stepAddCenter"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/steps_right_plus_edit"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:alpha="1"
+                    android:enabled="true"
+                    android:background="@drawable/rounded_edittext_register"
+                    android:onClick="stepAddRight"
+                    android:text="+"
+                    app:layout_constraintStart_toEndOf="@+id/steps_center_plus_edit"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/steps_left_minus_edit"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:alpha="1"
+                    android:enabled="true"
+                    android:background="@drawable/rounded_edittext_register"
+                    android:onClick="stepAddLeft"
+                    android:text="-"
+                    app:layout_constraintEnd_toStartOf="@+id/steps_center_plus_edit"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <Button
+                android:id="@+id/send_button_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="50dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/rounded_button"
+                android:text="EDIT RECIPE"
+                android:onClick="editDatabaseRecipe"
+                android:textColor="@android:color/white"
+                android:textSize="22dp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/name_linearLayout_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorDarkGreen"
+        android:orientation="vertical"
+        android:padding="12dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+            android:id="@+id/name_editText_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:background="@drawable/rounded_edittext_register"
+            android:ems="10"
+            android:hint="Name of the recipe"
+            android:maxLength="100"
+            android:digits="abcdefghijklmnopqrstuvwxyz ()QWERTYUIOPLKJHGFDSAZXCVBNM"
+            android:inputType="text"
+            android:padding="8dp"
+            android:textColor="@android:color/black"
+            android:textColorHint="@android:color/darker_gray" />
+
+        <Spinner
+            android:id="@+id/difficulty_spinner_edit"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginTop="13dp"
+            android:popupBackground="@android:color/white"
+            android:spinnerMode="dialog" />
+
+        <Spinner
+            android:id="@+id/type_spinner_edit"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginTop="13dp"
+            android:popupBackground="@android:color/white"
+            android:spinnerMode="dialog" />
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

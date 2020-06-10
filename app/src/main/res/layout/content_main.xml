@@ -41,9 +41,9 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_marginEnd="6dp"
+                    android:background="@android:drawable/ic_menu_search"
                     android:gravity="center"
                     android:onClick="openNewRecipe"
-                    android:background="@android:drawable/ic_input_add"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />

@@ -68,7 +68,6 @@ public class NewRecipeActivity extends AppCompatActivity {
         Button right = findViewById(R.id.ingredient_right_plus);
         right.setAlpha(1f);
         right.setEnabled(true);
-        //ll.removeViewAt(0);
     }
 
     public void ingredientAddRight(View view) {

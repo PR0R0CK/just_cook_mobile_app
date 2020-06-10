@@ -52,6 +52,7 @@ import java.util.List;
 public class RecipeDetailsActivity extends AppCompatActivity {
     private FirebaseDatabase mDatabase;
     private ArrayList<RecipeBook> recipesBook = new ArrayList<>();
+    private RecipeBook recipe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,7 +92,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
                 intent.getStringExtra("email")
         );
 
-        RecipeBook recipe = new RecipeBook(
+        recipe = new RecipeBook(
                 user,
                 intent.getStringExtra("recipeId"),
                 intent.getStringExtra("name"),
@@ -218,6 +219,18 @@ public class RecipeDetailsActivity extends AppCompatActivity {
     public void editRecipe(View view) {
         Intent intent = new Intent(this, EditRecipeActivity.class);
         //TODO: putExtra
+        intent.putExtra("userId",recipe.getUser().getUserId());
+        intent.putExtra("username", recipe.getUser().getUsername());
+        intent.putExtra("email",recipe.getUser().getEmail());
+        intent.putExtra("recipeId", recipe.getRecipeId());
+        intent.putExtra("name", recipe.getName());
+        intent.putExtra("type", recipe.getType());
+        intent.putExtra("picture", recipe.getPicture());
+        intent.putExtra("ingredients", recipe.getIngredients());
+        intent.putExtra("userId", recipe.getUser().getUsername());
+        intent.putExtra("recipe", recipe.getRecipe());
+        intent.putExtra("difficulty", recipe.getDifficulty());
+        intent.putExtra("rate", recipe.getRate());
         startActivity(intent);
     }
 }
