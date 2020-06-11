@@ -9,18 +9,14 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.justcook.service.FirebaseDatabaseConnector;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import android.content.Intent;
 import android.os.Bundle;
-import okhttp3.*;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,14 +28,8 @@ import com.example.justcook.R;
 import com.example.justcook.model.RecipeBook;
 import com.google.android.material.navigation.NavigationView;
 
-import com.google.gson.reflect.TypeToken;
-
-import java.io.IOException;
-import java.lang.reflect.Array;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     ArrayList<RecipeBook> recipeBooks = new ArrayList<>();
@@ -65,8 +55,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         recipe = new RecipeBook();
 
         getAllRecipes();
-//        getRecipes();
 
+        //TODO: Do poprawienia te metody - lepsza filtracja danych
+//        getAllSoupRecipes();
+//        getAllDessertRecipes();
+
+
+//        getRecipes();
+//        initRecyclerView(allRecipes);
+
+        Log.d("###Drukuj!",allRecipes.toString());
     }
 
     private void getAllRecipes() {
@@ -81,8 +79,65 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         allRecipes.add(recipe);
 //                        System.out.println("##@@" + allRecipes.toString());
                     }
-                    Log.d("##@@",allRecipes.get(0).getName());
                     initRecyclerView(allRecipes);
+                    Log.d("##@@",allRecipes.get(0).getName());
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void getAllDessertRecipes() {
+        reference = database.getReference("/recipes");
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    allRecipes.clear();
+                    for (DataSnapshot dss:dataSnapshot.getChildren()) {
+                        recipe = dss.getValue(RecipeBook.class);
+                        if (recipe.getType() == "Dessert" || recipe.getType() == "Deser") {
+                            allRecipes.add(recipe);
+                            Log.d("##@@!!",recipe.getType());
+                        }
+//                        System.out.println("##@@" + allRecipes.toString());
+                    }
+                        initRecyclerView(allRecipes);
+                        Log.d("##@@",allRecipes.get(0).getName());
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void getAllSoupRecipes() {
+        reference = database.getReference("/recipes");
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    allRecipes.clear();
+                    for (DataSnapshot dss:dataSnapshot.getChildren()) {
+                        recipe = dss.getValue(RecipeBook.class);
+                        if (recipe.getType().toString() == "Soup" || recipe.getType() == "Zupa") {
+                            allRecipes.add(recipe);
+                            Log.d("##@@!!",recipe.getType());
+                        }
+//                        System.out.println("##@@" + allRecipes.toString());
+                    }
+                    initRecyclerView(allRecipes);
+                    Log.d("##@@",allRecipes.get(0).getName());
+
                 }
             }
 

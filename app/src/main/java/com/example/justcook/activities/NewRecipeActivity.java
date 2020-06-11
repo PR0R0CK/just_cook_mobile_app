@@ -172,7 +172,7 @@ public class NewRecipeActivity extends AppCompatActivity {
             //AREK, JAK CHCESZ DODAWAĆ DO BAZY TO W TYM MIEJSCU
             //vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 
-            User user = new User("UC3Gv7lpS9RKcWSkF256UayfrwJ9","hop_hop_hop","3xhop@hop.com");
+            User user = new User("UC3Gv7lpS9RKcWSkF256UayfrwJ9","hop_hop_hop_67","3xhop@hop.com");
             addRecipeToFirebaseDatabase(new RecipeBook(user,"0", recipeName,recipeType,"pic",
                     recipeIngredients,recipeSteps,recipeDifficulty,"0"));
 
