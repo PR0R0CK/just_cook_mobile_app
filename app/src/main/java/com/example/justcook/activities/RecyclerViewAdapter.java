@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.justcook.R;
@@ -68,8 +69,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 mContext.startActivity(intent);
             }
         });
-
-        //TODO: obsługa wyświetlania zdjęć holder.difficultyPhoto / holder.recipePhoto
+        switch(recipe.getDifficulty()){
+            case "Easy": holder.difficultyPhoto.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.easy_icon));
+            break;
+            case "Intermediate": holder.difficultyPhoto.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.intermediate_icon));
+            break;
+            case "Challenging": holder.difficultyPhoto.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.challenging_icon));
+            break;
+        }
     }
 
     @Override

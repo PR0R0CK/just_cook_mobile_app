@@ -29,7 +29,8 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_weight="1"
-            app:srcCompat="@android:drawable/ic_menu_myplaces" />
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp" />
     </LinearLayout>
 
     <LinearLayout
