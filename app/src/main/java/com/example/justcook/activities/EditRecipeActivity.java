@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.justcook.R;
 import com.example.justcook.model.RecipeBook;
@@ -204,5 +205,44 @@ public class EditRecipeActivity extends AppCompatActivity {
             right.setEnabled(false);
         }
         ll.removeViewAt(ll.getChildCount()-1);
+    }
+    public void editRecipeInDatabase(View view) {
+        //GOTOWE DANE DO DODANIA vvvvvvvvvvvvvvvv
+        String recipeName = ((EditText) findViewById(R.id.name_editText_edit)).getText().toString();
+        String recipeDifficulty = ((Spinner) findViewById(R.id.difficulty_spinner_edit)).getSelectedItem().toString();
+        String recipeType = ((Spinner) findViewById(R.id.type_spinner_edit)).getSelectedItem().toString();
+        String recipeIngredients = "";
+        String recipeSteps = "";
+        //KONIEC GOTOWYCH DANYCH DO DODANIA^^^^^^
+        LinearLayout ingredientLayout = findViewById(R.id.ingreduints_linearLayout_edit);
+        LinearLayout stepsLayout = findViewById(R.id.steps_linearLayout_edit);
+        if(ingredientLayout.getChildCount()<1){
+            Toast.makeText(this, "Recipe needs at least 1 ingredient", Toast.LENGTH_SHORT).show();
+        }else if(stepsLayout.getChildCount()<1){
+            Toast.makeText(this, "Recipe needs at least 1 step", Toast.LENGTH_SHORT).show();
+        }else{
+            String databaseDelimiter = getString(R.string.databaseDelimiter);
+
+            for(int i =0; i< ingredientLayout.getChildCount(); i++){
+                recipeIngredients += ((EditText) ingredientLayout.getChildAt(i)).getText().toString();
+                recipeIngredients += databaseDelimiter;
+            }
+            Log.d("Ingredients: ", recipeIngredients);
+
+            for(int i=0; i< stepsLayout.getChildCount();i++){
+                recipeSteps += ((EditText) stepsLayout.getChildAt(i)).getText().toString();
+                recipeSteps += databaseDelimiter;
+            }
+            Log.d("Steps: ", recipeSteps);
+            //TODO: EDYCJA WARTOŚCI W BAZIE
+            //TUTAJ EDYCJA DANYCH W BAZIE
+            //vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+
+            //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            //Po upewnieniu się że działa, odkomentować vvvvv
+//            finish();
+//            Toast.makeText(this, "Your recipe will be changed soon", Toast.LENGTH_SHORT).show();
+        }
+
     }
 }

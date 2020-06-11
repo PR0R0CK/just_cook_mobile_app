@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DatabaseReference reference;
     private FirebaseDatabase database;
     private RecipeBook recipe;
+    private String currentFilter = "all";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,15 +143,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         if (id == R.id.nav_desserts) {
+            currentFilter="desserts";
             Toast toast = Toast.makeText(getApplicationContext(), "Desserts", Toast.LENGTH_SHORT);
             toast.show();
         } else if (id == R.id.nav_main_courses) {
+            currentFilter="main_courses";
             Toast toast = Toast.makeText(getApplicationContext(), "Main courses", Toast.LENGTH_SHORT);
             toast.show();
         } else if (id == R.id.nav_my_recipes) {
+            currentFilter="my_recipes";
             Toast toast = Toast.makeText(getApplicationContext(), "My recipies", Toast.LENGTH_SHORT);
             toast.show();
         } else if (id == R.id.nav_soups) {
+            currentFilter="soups";
             Toast toast = Toast.makeText(getApplicationContext(), "Soups", Toast.LENGTH_SHORT);
             toast.show();
         } else if (id == R.id.nav_log_out) {
@@ -159,6 +164,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_add_recipe) {
             Intent intent = new Intent(this, NewRecipeActivity.class);
             startActivity(intent);
+        } else if (id == R.id.nav_all){
+            currentFilter = "all";
+            getAllRecipes();
+            Toast.makeText(this, "All recipes", Toast.LENGTH_SHORT).show();
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

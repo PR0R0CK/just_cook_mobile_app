@@ -1,25 +1,18 @@
 package com.example.justcook.activities;
 
-import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
+
 
 import android.content.Context;
+
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -34,20 +27,12 @@ import com.example.justcook.R;
 import com.example.justcook.model.Commentary;
 import com.example.justcook.model.RecipeBook;
 import com.example.justcook.model.User;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 
-import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+
 
 public class RecipeDetailsActivity extends AppCompatActivity {
     private FirebaseDatabase mDatabase;
@@ -204,16 +189,39 @@ public class RecipeDetailsActivity extends AppCompatActivity {
             button.setText(String.valueOf(likes+1));
             button.setCompoundDrawablesWithIntrinsicBounds(android.R.drawable.btn_star_big_on,0,0,0);
             button.setTag("1");
+            Toast.makeText(this, "You like this recipe", Toast.LENGTH_SHORT).show();
         }else if(button.getTag().equals("1")){
             button.setText(String.valueOf(likes-1));
             button.setCompoundDrawablesWithIntrinsicBounds(android.R.drawable.btn_star,0,0,0);
             button.setTag("0");
+            Toast.makeText(this, "You no longer like this recipe", Toast.LENGTH_SHORT).show();
         }
+        timeout(view);
 
 
     }
+
+    private void timeout(final View view) {
+        view.setEnabled(false);
+        Timer buttonTimer = new Timer();
+        buttonTimer.schedule(new TimerTask() {
+
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        view.setEnabled(true);
+                    }
+                });
+            }
+        }, 1000);
+    }
+
     public void enableEditing(){
         findViewById(R.id.edit_button_details).setVisibility(View.VISIBLE);
+        findViewById(R.id.delete_button_details).setVisibility(View.VISIBLE);
     }
 
     public void editRecipe(View view) {
@@ -233,4 +241,34 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         intent.putExtra("rate", recipe.getRate());
         startActivity(intent);
     }
+
+    public void deleteRecipe(View view) {
+        Toast.makeText(this, "usuniecie trza zrobic dopiero Pepega", Toast.LENGTH_SHORT).show();
+        final AlertDialog.Builder alert = new AlertDialog.Builder(RecipeDetailsActivity.this);
+        View mView = getLayoutInflater().inflate(R.layout.delete_dialog,null);
+        Button delete = (Button)mView.findViewById(R.id.delete_dialog);
+        Button cancel = (Button)mView.findViewById(R.id.abort_dialog);
+        alert.setView(mView);
+
+        final AlertDialog alertDialog = alert.create();
+
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(RecipeDetailsActivity.this, "*usunięcie przepisu tutaj*", Toast.LENGTH_SHORT).show();
+
+
+
+                alertDialog.dismiss();
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+            }
+        });
+        alertDialog.show();
+    }
 }
+

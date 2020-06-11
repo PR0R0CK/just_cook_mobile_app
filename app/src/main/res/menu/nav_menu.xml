@@ -4,6 +4,10 @@
     android:layout_height="match_parent">
     <group>
         <item
+            android:id="@+id/nav_all"
+            android:title="All recipes"
+            android:onClick="onNavigationItemSelected"/>
+        <item
             android:id="@+id/nav_desserts"
             android:title="Desserts"
             android:onClick="onNavigationItemSelected"/>
