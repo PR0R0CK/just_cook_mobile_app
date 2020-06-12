@@ -93,6 +93,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.title_textView_details)).setText(recipe.getName());
         //DODANIE SKŁADNIKÓW I KROKÓW DO ODPOWIADAJĄCYCH IM LAYOUTÓW
         insertDetails(recipe.getIngredients(),recipe.getRecipe());
+        ((Button)findViewById(R.id.like_button_details)).setText(recipe.getRate());
 
         //TODO: DODAĆ SPRAWDZANIE CZY OBECNY UŻYTKOWNIK JEST WŁAŚCICIELEM
         enableEditing();

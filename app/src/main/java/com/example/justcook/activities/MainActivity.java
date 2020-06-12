@@ -15,6 +15,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,6 +24,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.justcook.R;
@@ -238,10 +243,41 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-    public void openNewRecipe(View view) {
+    public void toggleSearchBar(View view) {
         Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake);
         view.startAnimation(shake);
-        Intent intent = new Intent(this, NewRecipeActivity.class);
-        startActivity(intent);
+        LinearLayout linearLayout = findViewById(R.id.searchBar_linearLayout_main);
+        if(linearLayout.getTag().equals("hidden")){
+            linearLayout.setVisibility(View.VISIBLE);
+            linearLayout.setTag("visible");
+        }else if(linearLayout.getTag()=="visible"){
+            linearLayout.setVisibility(View.GONE);
+            linearLayout.setTag("hidden");
+            ((EditText)findViewById(R.id.search_editText_main)).setText("");
+            View vi = this.getCurrentFocus();
+            if (vi != null) {
+                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            }
+        }
+    }
+
+    public void searchRecipe(View view) {
+        EditText searchBar = findViewById(R.id.search_editText_main);
+        searchBar.setVisibility(View.GONE);
+        searchBar.setVisibility(View.VISIBLE);
+        String searchedRecipe = String.valueOf(searchBar.getText());
+        View vi = this.getCurrentFocus();
+        if (vi != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+        if(!searchedRecipe.replaceAll("\\s","").equals("")){
+            //Wyszukiwanie tutaj
+
+        }
+
+
+
     }
 }
