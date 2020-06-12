@@ -106,14 +106,44 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     allRecipes.clear();
                     for (DataSnapshot dss:dataSnapshot.getChildren()) {
                         recipe = dss.getValue(RecipeBook.class);
-                        if (recipe.getType() == "Dessert" || recipe.getType() == "Deser") {
+                        String type = dss.child("type").getValue(String.class);
+                        if (type.equals("Dessert") || type.equals("Deser")) {
                             allRecipes.add(recipe);
                             Log.d("##@@!!",recipe.getType());
                         }
 //                        System.out.println("##@@" + allRecipes.toString());
                     }
-                        initRecyclerView(allRecipes);
-                        Log.d("##@@",allRecipes.get(0).getName());
+                    initRecyclerView(allRecipes);
+                    Log.d("##@@",allRecipes.get(0).getName());
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void getAllMainCourses() {
+        reference = database.getReference("/recipes");
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    allRecipes.clear();
+                    for (DataSnapshot dss:dataSnapshot.getChildren()) {
+                        recipe = dss.getValue(RecipeBook.class);
+                        String type = dss.child("type").getValue(String.class);
+                        if (type.equals("Main course") || type.equals("Main Course") || type.equals("Danie główne")) {
+                            allRecipes.add(recipe);
+                            Log.d("##@@!!",recipe.getType());
+                        }
+//                        System.out.println("##@@" + allRecipes.toString());
+                    }
+                    initRecyclerView(allRecipes);
+                    Log.d("##@@",allRecipes.get(0).getName());
 
                 }
             }
@@ -134,7 +164,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     allRecipes.clear();
                     for (DataSnapshot dss:dataSnapshot.getChildren()) {
                         recipe = dss.getValue(RecipeBook.class);
-                        if (recipe.getType().toString() == "Soup" || recipe.getType() == "Zupa") {
+                        String type = dss.child("type").getValue(String.class);
+                        if (type.equals("Soup") || type.equals("Zupa")) {
                             allRecipes.add(recipe);
                             Log.d("##@@!!",recipe.getType());
                         }
@@ -204,10 +235,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (id == R.id.nav_desserts) {
             currentFilter="desserts";
+            getAllDessertRecipes();
             Toast toast = Toast.makeText(getApplicationContext(), "Desserts", Toast.LENGTH_SHORT);
             toast.show();
         } else if (id == R.id.nav_main_courses) {
             currentFilter="main_courses";
+            getAllMainCourses();
             Toast toast = Toast.makeText(getApplicationContext(), "Main courses", Toast.LENGTH_SHORT);
             toast.show();
         } else if (id == R.id.nav_my_recipes) {
@@ -216,6 +249,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             toast.show();
         } else if (id == R.id.nav_soups) {
             currentFilter="soups";
+            getAllSoupRecipes();
             Toast toast = Toast.makeText(getApplicationContext(), "Soups", Toast.LENGTH_SHORT);
             toast.show();
         } else if (id == R.id.nav_log_out) {
@@ -274,7 +308,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         if(!searchedRecipe.replaceAll("\\s","").equals("")){
             //Wyszukiwanie tutaj
-
+            //TODO: searchedRecipe - givenText
         }
 
 
