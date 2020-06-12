@@ -3,7 +3,9 @@
     <color name="colorPrimary">#1F4200</color>
     <color name="colorPrimaryDark">#0C1900</color>
     <color name="colorAccent">#8FD81A</color>
+    <color name="colorLight">#FF4C730C</color>
     <color name="colorBackground">#CC2A5A00</color>
+    <color name="colorBackgroundLight">#CC2A5900</color>
     <color name="colorDarkGreen">#033101</color>
     <color name="colorDarkerGreen">#032601</color>
 

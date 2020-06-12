@@ -149,7 +149,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         editText.setText("");
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        Toast toast = Toast.makeText(getApplicationContext(), "Your comment is being sent", Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(getApplicationContext(), "Your comment is being sent: "+comment, Toast.LENGTH_SHORT);
         toast.show();
     }
     //ABY DODAĆ SKŁADNIK / KROK PRZEPISU NALEŻY UŻYWAĆ TYLKO I WYŁĄCZNIE TYCH 2 FUNKCJI

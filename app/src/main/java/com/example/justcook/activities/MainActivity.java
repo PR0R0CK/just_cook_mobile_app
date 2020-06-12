@@ -60,16 +60,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         recipe = new RecipeBook();
 
         getAllRecipes();
-
-        //TODO: Do poprawienia te metody - lepsza filtracja danych
-//        getAllSoupRecipes();
-//        getAllDessertRecipes();
-
-
-//        getRecipes();
-//        initRecyclerView(allRecipes);
-
-        Log.d("###Drukuj!",allRecipes.toString());
     }
 
     private void getAllRecipes() {
@@ -139,6 +129,35 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         if (type.equals("Main course") || type.equals("Main Course") || type.equals("Danie główne")) {
                             allRecipes.add(recipe);
                             Log.d("##@@!!",recipe.getType());
+                        }
+//                        System.out.println("##@@" + allRecipes.toString());
+                    }
+                    initRecyclerView(allRecipes);
+                    Log.d("##@@",allRecipes.get(0).getName());
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+    }
+
+    private void getAllRecipesWhichCalls(String givenName) {
+        final String lowerCaseName = givenName.toLowerCase();
+        reference = database.getReference("/recipes");
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    allRecipes.clear();
+                    for (DataSnapshot dss:dataSnapshot.getChildren()) {
+                        recipe = dss.getValue(RecipeBook.class);
+                        String name = dss.child("name").getValue(String.class);
+                        if (name.toLowerCase().contains(lowerCaseName)) {
+                            allRecipes.add(recipe);
+                            Log.d("##@@!!",recipe.getName());
                         }
 //                        System.out.println("##@@" + allRecipes.toString());
                     }
@@ -307,11 +326,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
         if(!searchedRecipe.replaceAll("\\s","").equals("")){
-            //Wyszukiwanie tutaj
-            //TODO: searchedRecipe - givenText
+            getAllRecipesWhichCalls(searchedRecipe);
         }
-
-
-
     }
 }
