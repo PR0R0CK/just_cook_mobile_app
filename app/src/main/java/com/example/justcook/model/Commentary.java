@@ -2,13 +2,15 @@ package com.example.justcook.model;
 
 public class Commentary {
     private String commentId;
-    private String recipeId;
-    private String username;
+    private RecipeBook recipeBook;
+    private User user;
     private String comment;
 
-    public Commentary(String username, String comment, String recipeId) {
-        this.recipeId = recipeId;
-        this.username = username;
+    public Commentary() {}
+    public Commentary(String commentId, RecipeBook recipeBook, User user, String comment) {
+        this.commentId = commentId;
+        this.recipeBook = recipeBook;
+        this.user = user;
         this.comment = comment;
     }
 
@@ -20,20 +22,20 @@ public class Commentary {
         this.commentId = commentId;
     }
 
-    public String getRecipeId() {
-        return recipeId;
+    public RecipeBook getRecipeBook() {
+        return recipeBook;
     }
 
-    public void setRecipeId(String recipeId) {
-        this.recipeId = recipeId;
+    public void setRecipeBook(RecipeBook recipeBook) {
+        this.recipeBook = recipeBook;
     }
 
-    public String getUsername() {
-        return username;
+    public User getUser() {
+        return user;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getComment() {

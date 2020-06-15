@@ -36,7 +36,7 @@ public class CommentRecyclerViewAdapter extends RecyclerView.Adapter<CommentRecy
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Commentary comment = comments.get(position);
-        holder.username.setText(comment.getUsername());
+        holder.username.setText(comment.getUser().getUsername());
         holder.comment.setText(comment.getComment());
         if(position%2==1) holder.parentLayout.setBackgroundColor(Color.parseColor("#F8033101"));
 

@@ -1,5 +1,6 @@
 package com.example.justcook.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.ContextThemeWrapper;
@@ -27,7 +28,14 @@ import com.example.justcook.R;
 import com.example.justcook.model.Commentary;
 import com.example.justcook.model.RecipeBook;
 import com.example.justcook.model.User;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Timer;
@@ -35,37 +43,45 @@ import java.util.TimerTask;
 
 
 public class RecipeDetailsActivity extends AppCompatActivity {
-    private FirebaseDatabase mDatabase;
+    private String nameOfUser = "";
+    private FirebaseDatabase database;
+    private DatabaseReference reference;
     private ArrayList<RecipeBook> recipesBook = new ArrayList<>();
     private RecipeBook recipe;
+    private User userr;
+    private Commentary commentarry;
+    private ArrayList<Commentary> allComments = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_details);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-        mDatabase = FirebaseDatabase.getInstance();
-
+        database = FirebaseDatabase.getInstance();
+        userr = new User();
+        commentarry = new Commentary();
         //PLACEHOLDER KOMENTARZY
-        ArrayList<Commentary> comments = new ArrayList<>();
-        comments.add(new Commentary("User1","Comment1","1"));
-        comments.add(new Commentary("User2","Comment2","1"));
-        comments.add(new Commentary("User1","Comment1","1"));
-        comments.add(new Commentary("User2","Comment2","1"));
-        comments.add(new Commentary("User1","Comment1","1"));
-        comments.add(new Commentary("User2","Comment2","1"));
-        comments.add(new Commentary("User1","Comment1","1"));
-        comments.add(new Commentary("User2","Comment2","1"));
-        comments.add(new Commentary("User1","Comment1","1"));
-        comments.add(new Commentary("User2","Comment2","1"));
-        comments.add(new Commentary("User1","Comment1","1"));
-        comments.add(new Commentary("User2","Comment2","1"));
-        comments.add(new Commentary("User1","Comment1","1"));
-        comments.add(new Commentary("User2","Comment2","1"));
-        comments.add(new Commentary("User1","Comment1","1"));
-        comments.add(new Commentary("User2","Comment2","1"));
-        //KONIEC PLACEHOLDERA KOMENTARZY
-        initRecyclerView(comments);
+//        ArrayList<Commentary> comments = new ArrayList<>();
+//        User user1 = new User("Z9cxtM7nM3V4rfK69yG25LlkSQj2","user","mail@gmail.com");
+//        comments.add(new Commentary("User1","Comment1","1"));
+//        comments.add(new Commentary("User2","Comment2","1"));
+//        comments.add(new Commentary("User1","Comment1","1"));
+//        comments.add(new Commentary("User2","Comment2","1"));
+//        comments.add(new Commentary("User1","Comment1","1"));
+//        comments.add(new Commentary("User2","Comment2","1"));
+//        comments.add(new Commentary("User1","Comment1","1"));
+//        comments.add(new Commentary("User2","Comment2","1"));
+//        comments.add(new Commentary("User1","Comment1","1"));
+//        comments.add(new Commentary("User2","Comment2","1"));
+//        comments.add(new Commentary("User1","Comment1","1"));
+//        comments.add(new Commentary("User2","Comment2","1"));
+//        comments.add(new Commentary("User1","Comment1","1"));
+//        comments.add(new Commentary("User2","Comment2","1"));
+//        comments.add(new Commentary("User1","Comment1","1"));
+//        comments.add(new Commentary("User2","Comment2","1"));
+//        //KONIEC PLACEHOLDERA KOMENTARZY
+//        initRecyclerView(comments);
+
 
         ////////////////////////////////////////
         //ODEBRANIE INFORMACJI O PRZEPISIE
@@ -89,6 +105,8 @@ public class RecipeDetailsActivity extends AppCompatActivity {
                 intent.getStringExtra("rate")
         );
 
+        getAllComments();
+
 
         ((TextView) findViewById(R.id.title_textView_details)).setText(recipe.getName());
         //DODANIE SKŁADNIKÓW I KROKÓW DO ODPOWIADAJĄCYCH IM LAYOUTÓW
@@ -97,6 +115,42 @@ public class RecipeDetailsActivity extends AppCompatActivity {
 
         //TODO: DODAĆ SPRAWDZANIE CZY OBECNY UŻYTKOWNIK JEST WŁAŚCICIELEM
         enableEditing();
+    }
+
+    private void getAllComments() {
+        reference = database.getReference("/comments");
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot dss:dataSnapshot.getChildren()) {
+                        commentarry = dss.getValue(Commentary.class);
+                        if (commentarry.getRecipeBook().getName().equals(recipe.getName())) {
+                            allComments.add(commentarry);
+                        }
+//                        System.out.println("##@@" + allRecipes.toString());
+                    }
+                    initRecyclerView(allComments);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void addCommentToFirebaseDatabase(Commentary commentary){
+
+        DatabaseReference ref = database.getReference("/comments");
+        String commentId = ref.push().getKey();
+
+        commentary.setCommentId(commentId);
+//        ref.ge
+        ref.push().setValue(commentary);
+//        recipesBook.add(recipeBook);
+//        ref.setValue(recipesBook);
     }
 
     private void insertDetails(String ingredients, String recipe) {
@@ -142,7 +196,44 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         layout.setLayoutParams(paramsText);
     }
 
+
+    private String getUsernameUsingId(String userId) {
+        final String uid = userId;
+        final String[] username = {""};
+        reference = database.getReference("/users");
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot dss:dataSnapshot.getChildren()) {
+                        userr = dss.getValue(User.class);
+                        String type = dss.child("username").getValue(String.class);
+                        String userIdd = dss.child("userId").getValue(String.class);
+                        if (userIdd.equals(uid)) {
+//                            allRecipes.add(recipe);
+                            username[0] = type;
+                            nameOfUser = type;
+                            break;
+                        }
+//                        System.out.println("##@@" + allRecipes.toString());
+                    }
+                    Log.d("##USER", username[0]);
+                }
+            }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        return nameOfUser;
+    }
+
     public void sendComment(View view) {
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+
         //TODO: TUTAJ NALEŻY WSTAWIĆ LOGIKĘ WSTAWIANIA KOMENTARZA DO BAZY DANYCH
         EditText editText = findViewById(R.id.comment_EditText_details);
         String comment = editText.getText().toString(); //TODO: GOTOWA ZAWARTOŚĆ KOMENTARZA
@@ -151,6 +242,30 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
         Toast toast = Toast.makeText(getApplicationContext(), "Your comment is being sent: "+comment, Toast.LENGTH_SHORT);
         toast.show();
+
+
+        // Saving data to FireabaseDatabase
+        if(firebaseUser != null) {
+            String uid = firebaseUser.getUid();
+            String email = firebaseUser.getEmail();
+//            String username = firebaseUser.getDisplayName();
+            String username = getUsernameUsingId(uid);
+//            getUsernameUsingId(uid);
+//            String uid = "";
+//            String email = "";
+//            String username = "";
+//            for (UserInfo userInfo:firebaseUser.getProviderData()) {
+//                uid = userInfo.getUid();
+//                email = userInfo.getEmail();
+//                username = userInfo.getDisplayName();
+//            }
+//            RecipeBook recipe = new RecipeBook();
+            User usr = new User(uid,email,username);
+            addCommentToFirebaseDatabase(new Commentary("0",recipe,usr,comment));
+            Log.d("##USER", username);
+        } else {
+            Toast.makeText(getApplicationContext(), "First login!", Toast.LENGTH_SHORT).show();
+        }
     }
     //ABY DODAĆ SKŁADNIK / KROK PRZEPISU NALEŻY UŻYWAĆ TYLKO I WYŁĄCZNIE TYCH 2 FUNKCJI
     public void appendIngredient(String ingredient){
