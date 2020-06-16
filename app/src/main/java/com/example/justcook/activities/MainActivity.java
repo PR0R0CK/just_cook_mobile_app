@@ -9,6 +9,10 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.justcook.model.Commentary;
+import com.example.justcook.model.User;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,6 +31,7 @@ import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.justcook.R;
@@ -37,10 +42,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    TextView tvEmail;
     ArrayList<RecipeBook> recipeBooks = new ArrayList<>();
     private ArrayList<RecipeBook> allRecipes = new ArrayList<>();
     private DatabaseReference reference;
     private FirebaseDatabase database;
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser firebaseUser;
     private RecipeBook recipe;
     private String currentFilter = "all";
 
@@ -48,6 +56,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
+        tvEmail = findViewById(R.id.email_textView_header);
+
+        String em = firebaseUser.getEmail();
+        String em1 = firebaseUser.getUid();
+
+        Toast.makeText(this,em,Toast.LENGTH_SHORT).show();
+        // Błąd !!!
+//        tvEmail.setText(em);
+
 
         //SETTING UP NAV DRAWER
         DrawerLayout drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
