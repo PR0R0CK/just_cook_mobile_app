@@ -38,6 +38,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -120,6 +121,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
     private void getAllComments() {
         reference = database.getReference("/comments");
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
+
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
@@ -130,6 +132,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
                         }
 //                        System.out.println("##@@" + allRecipes.toString());
                     }
+                    Collections.reverse(allComments);
                     initRecyclerView(allComments);
                 }
             }
@@ -149,6 +152,20 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         commentary.setCommentId(commentId);
 //        ref.ge
         ref.push().setValue(commentary);
+        Timer buttonTimer = new Timer();
+        buttonTimer.schedule(new TimerTask() {
+
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        getAllComments();
+                    }
+                });
+            }
+        }, 1000);
 //        recipesBook.add(recipeBook);
 //        ref.setValue(recipesBook);
     }
