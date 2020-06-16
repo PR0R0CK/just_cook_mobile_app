@@ -81,6 +81,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getAllRecipes();
     }
 
+    @Override
+    protected void onResume() {
+        switch(currentFilter){
+            case "all": getAllRecipes();
+            break;
+            case "Desserts": getAllDessertRecipes();
+            break;
+            case "Main courses": getAllMainCourses();
+            break;
+            case "Soups": getAllSoupRecipes();
+            break;
+            case "My recipes": getAllRecipes(); //TODO: ZAMIENIĆ NA FUNKCJĘ WCZYTUJĄ PRZEPISY UŻYTKOWNIKA
+            break;
+        }
+
+        super.onResume();
+    }
+
     private void getAllRecipes() {
         reference = database.getReference("/recipes");
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
