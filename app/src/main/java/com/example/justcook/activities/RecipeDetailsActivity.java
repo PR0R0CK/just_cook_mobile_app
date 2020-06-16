@@ -248,18 +248,8 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         if(firebaseUser != null) {
             String uid = firebaseUser.getUid();
             String email = firebaseUser.getEmail();
-//            String username = firebaseUser.getDisplayName();
             String username = getUsernameUsingId(uid);
-//            getUsernameUsingId(uid);
-//            String uid = "";
-//            String email = "";
-//            String username = "";
-//            for (UserInfo userInfo:firebaseUser.getProviderData()) {
-//                uid = userInfo.getUid();
-//                email = userInfo.getEmail();
-//                username = userInfo.getDisplayName();
-//            }
-//            RecipeBook recipe = new RecipeBook();
+
             User usr = new User(uid,email,username);
             addCommentToFirebaseDatabase(new Commentary("0",recipe,usr,comment));
             Log.d("##USER", username);
