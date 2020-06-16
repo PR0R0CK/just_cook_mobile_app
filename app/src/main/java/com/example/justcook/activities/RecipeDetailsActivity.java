@@ -44,6 +44,8 @@ import java.util.TimerTask;
 
 
 public class RecipeDetailsActivity extends AppCompatActivity {
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser firebaseUser;
     private String nameOfUser = "";
     private FirebaseDatabase database;
     private DatabaseReference reference;
@@ -58,6 +60,8 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_details);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
         database = FirebaseDatabase.getInstance();
         userr = new User();
         commentarry = new Commentary();
@@ -115,7 +119,12 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         ((Button)findViewById(R.id.like_button_details)).setText(recipe.getRate());
 
         //TODO: DODAĆ SPRAWDZANIE CZY OBECNY UŻYTKOWNIK JEST WŁAŚCICIELEM
-        enableEditing();
+
+        if(firebaseUser.getUid().equals(recipe.getUser().getUserId())) {
+            enableEditing();
+        } else {
+            Toast.makeText(this,"Content is not available to edit!",Toast.LENGTH_LONG).show();
+        }
     }
 
     private void getAllComments() {
@@ -249,10 +258,6 @@ public class RecipeDetailsActivity extends AppCompatActivity {
     }
 
     public void sendComment(View view) {
-        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-
-        //TODO: TUTAJ NALEŻY WSTAWIĆ LOGIKĘ WSTAWIANIA KOMENTARZA DO BAZY DANYCH
         EditText editText = findViewById(R.id.comment_EditText_details);
         String comment = editText.getText().toString(); //TODO: GOTOWA ZAWARTOŚĆ KOMENTARZA
         editText.setText("");
@@ -260,7 +265,6 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
         Toast toast = Toast.makeText(getApplicationContext(), "Your comment is being sent: "+comment, Toast.LENGTH_SHORT);
         toast.show();
-
 
         // Saving data to FireabaseDatabase
         if(firebaseUser != null) {
