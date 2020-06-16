@@ -120,6 +120,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
 
     private void getAllComments() {
         reference = database.getReference("/comments");
+        allComments.clear();
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
