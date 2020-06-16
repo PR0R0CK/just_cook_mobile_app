@@ -62,31 +62,10 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
+
         database = FirebaseDatabase.getInstance();
         userr = new User();
         commentarry = new Commentary();
-        //PLACEHOLDER KOMENTARZY
-//        ArrayList<Commentary> comments = new ArrayList<>();
-//        User user1 = new User("Z9cxtM7nM3V4rfK69yG25LlkSQj2","user","mail@gmail.com");
-//        comments.add(new Commentary("User1","Comment1","1"));
-//        comments.add(new Commentary("User2","Comment2","1"));
-//        comments.add(new Commentary("User1","Comment1","1"));
-//        comments.add(new Commentary("User2","Comment2","1"));
-//        comments.add(new Commentary("User1","Comment1","1"));
-//        comments.add(new Commentary("User2","Comment2","1"));
-//        comments.add(new Commentary("User1","Comment1","1"));
-//        comments.add(new Commentary("User2","Comment2","1"));
-//        comments.add(new Commentary("User1","Comment1","1"));
-//        comments.add(new Commentary("User2","Comment2","1"));
-//        comments.add(new Commentary("User1","Comment1","1"));
-//        comments.add(new Commentary("User2","Comment2","1"));
-//        comments.add(new Commentary("User1","Comment1","1"));
-//        comments.add(new Commentary("User2","Comment2","1"));
-//        comments.add(new Commentary("User1","Comment1","1"));
-//        comments.add(new Commentary("User2","Comment2","1"));
-//        //KONIEC PLACEHOLDERA KOMENTARZY
-//        initRecyclerView(comments);
-
 
         ////////////////////////////////////////
         //ODEBRANIE INFORMACJI O PRZEPISIE
@@ -113,12 +92,12 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         getAllComments();
 
 
+
         ((TextView) findViewById(R.id.title_textView_details)).setText(recipe.getName());
         //DODANIE SKŁADNIKÓW I KROKÓW DO ODPOWIADAJĄCYCH IM LAYOUTÓW
         insertDetails(recipe.getIngredients(),recipe.getRecipe());
         ((Button)findViewById(R.id.like_button_details)).setText(recipe.getRate());
 
-        //TODO: DODAĆ SPRAWDZANIE CZY OBECNY UŻYTKOWNIK JEST WŁAŚCICIELEM
 
         if(firebaseUser.getUid().equals(recipe.getUser().getUserId())) {
             enableEditing();
@@ -126,6 +105,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
             Toast.makeText(this,"Content is not available to edit!",Toast.LENGTH_LONG).show();
         }
     }
+
 
     private void getAllComments() {
         reference = database.getReference("/comments");
@@ -321,8 +301,8 @@ public class RecipeDetailsActivity extends AppCompatActivity {
 
     public void likeRecipe(View view) {
         Button button = findViewById(R.id.like_button_details);
-        int likes = Integer.parseInt(String.valueOf(button.getText()));
-        //TODO: AKTUALIZACJA POLUBIEŃ W BAZIE, PIERWSZE - NOWE POLUBIENIE, DRUGIE - ANULOWANIE POLUBIENIA
+        int likes = Integer.parseInt(String.valueOf(recipe.getRate()));
+        //TODO: To nie zadziała
         if(button.getTag().equals("0")){
             button.setText(String.valueOf(likes+1));
             button.setCompoundDrawablesWithIntrinsicBounds(android.R.drawable.btn_star_big_on,0,0,0);
@@ -334,11 +314,19 @@ public class RecipeDetailsActivity extends AppCompatActivity {
             button.setTag("0");
             Toast.makeText(this, "You no longer like this recipe", Toast.LENGTH_SHORT).show();
         }
-        timeout(view);
 
+        updateRateToDatabase();
+
+        timeout(view);
 
     }
 
+    private void updateRateToDatabase() {
+        String idR = recipe.getRecipeId();
+        Integer rate = Integer.parseInt(recipe.getRate());
+        Integer newRate = rate+1;
+        database.getReference().child("recipes").child(idR).child("rate").setValue(String.valueOf(newRate));
+    }
     private void timeout(final View view) {
         view.setEnabled(false);
         Timer buttonTimer = new Timer();
