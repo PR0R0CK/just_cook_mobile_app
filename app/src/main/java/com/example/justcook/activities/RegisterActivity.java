@@ -44,6 +44,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+
         etUsername = findViewById(R.id.username_editText_register);
         etEmail = findViewById(R.id.email_editText_register);
         etPassword = findViewById(R.id.password_editText_register);
@@ -53,6 +54,10 @@ public class RegisterActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance();
 
+        if (mAuth.getCurrentUser() != null) {
+            startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+            finish();
+        }
 //        saveRecipeToFirebaseDatabase();
 
 

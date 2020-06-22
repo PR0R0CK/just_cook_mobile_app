@@ -180,6 +180,34 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
     }
 
+    private void getAllMainRecipes() {
+        reference = database.getReference("/recipes");
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    allRecipes.clear();
+                    for (DataSnapshot dss:dataSnapshot.getChildren()) {
+                        recipe = dss.getValue(RecipeBook.class);
+//                        String type = dss.child("type").getValue(String.class);
+                        if (firebaseUser.getUid().equals(recipe.getUser().getUserId())) {
+                            allRecipes.add(recipe);
+//                            Log.d("##@@!!",recipe.getType());
+                        }
+//                        System.out.println("##@@" + allRecipes.toString());
+                    }
+                    initRecyclerView(allRecipes);
+                    Log.d("##@@",allRecipes.get(0).getName());
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+    }
+
     private void getAllRecipesWhichCalls(String givenName) {
         final String lowerCaseName = givenName.toLowerCase();
         reference = database.getReference("/recipes");
@@ -301,6 +329,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_my_recipes) {
             currentFilter="my_recipes";
             Toast toast = Toast.makeText(getApplicationContext(), "My recipies", Toast.LENGTH_SHORT);
+            getAllMainRecipes();
             toast.show();
         } else if (id == R.id.nav_soups) {
             currentFilter="soups";
