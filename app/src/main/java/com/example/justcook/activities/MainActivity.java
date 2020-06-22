@@ -310,6 +310,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             toast.show();
         } else if (id == R.id.nav_log_out) {
             Toast toast = Toast.makeText(getApplicationContext(), "Log out", Toast.LENGTH_SHORT);
+            firebaseAuth.signOut();
             toast.show();
         } else if (id == R.id.nav_add_recipe) {
             Intent intent = new Intent(this, NewRecipeActivity.class);
