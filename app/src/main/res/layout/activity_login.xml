@@ -70,6 +70,7 @@
         android:layout_height="wrap_content"
         android:onClick="tmpMainActivityRedirect"
         android:text="TMP DEBUG BUTTON"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

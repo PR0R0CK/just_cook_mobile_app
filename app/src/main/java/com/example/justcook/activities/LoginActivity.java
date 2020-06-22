@@ -50,6 +50,8 @@ public class LoginActivity extends AppCompatActivity {
                                     Log.d("###Login","loginWithEmail: success");
                                     FirebaseUser user = mAuth.getCurrentUser();
                                     verifyingUser(user);
+                                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                    finish();
                                 }
                             }
                         })

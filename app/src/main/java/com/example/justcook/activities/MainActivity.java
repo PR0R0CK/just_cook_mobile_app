@@ -58,7 +58,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
-        tvEmail = findViewById(R.id.email_textView_header);
 
         String em = firebaseUser.getEmail();
         String em1 = firebaseUser.getUid();
@@ -311,6 +310,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_log_out) {
             Toast toast = Toast.makeText(getApplicationContext(), "Log out", Toast.LENGTH_SHORT);
             firebaseAuth.signOut();
+            Intent intent = new Intent(MainActivity.this,LoginActivity.class);
+            startActivity(intent);
+            finish();
             toast.show();
         } else if (id == R.id.nav_add_recipe) {
             Intent intent = new Intent(this, NewRecipeActivity.class);

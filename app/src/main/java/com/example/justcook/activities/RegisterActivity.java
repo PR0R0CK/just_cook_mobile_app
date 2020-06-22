@@ -97,7 +97,8 @@ public class RegisterActivity extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                                     Log.d("REGISTER", "createUserWithEmail:success");
                                     saveUserToFirebaseDatabase(username, email);
-                                    startActivity(new Intent(RegisterActivity.this, ConfirmationActivity.class));
+                                    startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+                                    finish();
                                 }
                             }
                         })
