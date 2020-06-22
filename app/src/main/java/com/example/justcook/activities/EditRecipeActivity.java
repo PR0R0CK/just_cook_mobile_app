@@ -1,5 +1,6 @@
 package com.example.justcook.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -19,14 +20,34 @@ import android.widget.Toast;
 import com.example.justcook.R;
 import com.example.justcook.model.RecipeBook;
 import com.example.justcook.model.User;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class EditRecipeActivity extends AppCompatActivity {
+    private DatabaseReference reference;
+    private FirebaseDatabase database;
+    private FirebaseAuth firebaseAuth;
+    private RecipeBook newRecipe;
+    private RecipeBook recipe;
+    private ArrayList<RecipeBook> allRecipes = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_recipe);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
+        database = FirebaseDatabase.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
+        newRecipe = new RecipeBook();
+        recipe = new RecipeBook();
+
 
         //Odebranie przepisu
         Intent intent = getIntent();
@@ -234,15 +255,48 @@ public class EditRecipeActivity extends AppCompatActivity {
                 recipeSteps += databaseDelimiter;
             }
             Log.d("Steps: ", recipeSteps);
-            //TODO: EDYCJA WARTOŚCI W BAZIE
-            //TUTAJ EDYCJA DANYCH W BAZIE
-            //vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 
-            //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-            //Po upewnieniu się że działa, odkomentować vvvvv
-//            finish();
-//            Toast.makeText(this, "Your recipe will be changed soon", Toast.LENGTH_SHORT).show();
+            editRecipes(recipeName,recipeDifficulty,recipeType,recipeIngredients,recipeSteps);
+
+            finish();
+            Toast.makeText(this, "Your recipe will be changed soon", Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+
+
+    private void editRecipes(String name, String diff, String type, String ingredients, String steps) {
+        Intent intent = getIntent();
+        final String recipeId = intent.getStringExtra("recipeId");
+        final String recipeName = name;
+        final String recipeDifficulty = diff;
+        final String recipeType = type;
+        final String recipeIngredients = ingredients;
+        final String recipeSteps = steps;
+
+//        final String idR = recipe.getRecipeId();
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("recipes");
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot dss : dataSnapshot.getChildren()){
+                    newRecipe = dss.getValue(RecipeBook.class);
+                    String key = dss.getKey();
+                    if (newRecipe.getRecipeId().equals(recipeId)) {
+                        database.getReference().child("recipes").child(key).child("name").setValue(String.valueOf(recipeName));
+                        database.getReference().child("recipes").child(key).child("difficulty").setValue(String.valueOf(recipeDifficulty));
+                        database.getReference().child("recipes").child(key).child("type").setValue(String.valueOf(recipeType));
+                        database.getReference().child("recipes").child(key).child("ingredients").setValue(String.valueOf(recipeIngredients));
+                        database.getReference().child("recipes").child(key).child("recipe").setValue(String.valueOf(recipeSteps));
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d("#editData","Editing data wasn't successful");
+            }
+        });
     }
 }

@@ -44,6 +44,7 @@ import java.util.TimerTask;
 
 
 public class RecipeDetailsActivity extends AppCompatActivity {
+    RecipeBook newRecipe;
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
     private String nameOfUser = "";
@@ -66,6 +67,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         userr = new User();
         commentarry = new Commentary();
+        newRecipe = new RecipeBook();
 
         ////////////////////////////////////////
         //ODEBRANIE INFORMACJI O PRZEPISIE
@@ -320,10 +322,27 @@ public class RecipeDetailsActivity extends AppCompatActivity {
     }
 
     private void updateRateToDatabase() {
-        String idR = recipe.getRecipeId();
+        final String idR = recipe.getRecipeId();
         Integer rate = Integer.parseInt(recipe.getRate());
-        Integer newRate = rate+1;
-        database.getReference().child("recipes").child(idR).child("rate").setValue(String.valueOf(newRate));
+        final Integer newRate = rate+1;
+//        database.getReference().child("recipes").child(idR).child("rate").setValue(String.valueOf(newRate));
+//        database.getReference().child("recipes").child(idR).child("rate").
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("recipes");
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot dss : dataSnapshot.getChildren()){
+                    newRecipe = dss.getValue(RecipeBook.class);
+                    String key = dss.getKey();
+                    if (newRecipe.getRecipeId().equals(recipe.getRecipeId())) {
+                        database.getReference().child("recipes").child(key).child("rate").setValue(String.valueOf(newRate));
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
     }
     private void timeout(final View view) {
         view.setEnabled(false);
@@ -367,7 +386,6 @@ public class RecipeDetailsActivity extends AppCompatActivity {
     }
 
     public void deleteRecipe(View view) {
-        Toast.makeText(this, "usuniecie trza zrobic dopiero Pepega", Toast.LENGTH_SHORT).show();
         final AlertDialog.Builder alert = new AlertDialog.Builder(RecipeDetailsActivity.this);
         View mView = getLayoutInflater().inflate(R.layout.delete_dialog,null);
         Button delete = (Button)mView.findViewById(R.id.delete_dialog);
@@ -379,10 +397,8 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(RecipeDetailsActivity.this, "*usunięcie przepisu tutaj*", Toast.LENGTH_SHORT).show();
-
-
-
+                Toast.makeText(RecipeDetailsActivity.this, "This recipe has been deleted!", Toast.LENGTH_SHORT).show();
+                deleteRecipeFromFirebaseDatabase();
                 alertDialog.dismiss();
             }
         });
@@ -393,6 +409,27 @@ public class RecipeDetailsActivity extends AppCompatActivity {
             }
         });
         alertDialog.show();
+    }
+
+    private void deleteRecipeFromFirebaseDatabase() {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("recipes");
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot dss : dataSnapshot.getChildren()){
+                    newRecipe = dss.getValue(RecipeBook.class);
+                    String key = dss.getKey();
+                    if (newRecipe.getRecipeId().equals(recipe.getRecipeId())) {
+                        database.getReference().child("recipes").child(key).removeValue();
+                        break;
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e("#cancelled", "onCancelled", databaseError.toException());
+            }
+        });
     }
 }
 
