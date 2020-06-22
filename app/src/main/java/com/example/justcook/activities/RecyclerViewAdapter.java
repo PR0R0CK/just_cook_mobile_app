@@ -47,7 +47,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         final RecipeBook recipe = recipes.get(position);
         holder.recipeRating.setText(recipe.getRate());
         holder.recipeType.setText(recipe.getType());
-        holder.recipeAuthor.setText(recipe.getUser().getUsername());
+        holder.recipeAuthor.setText(recipe.getUser().getEmail());
         holder.recipeTitle.setText(recipe.getName());
         if(position%2==1) holder.parentLayout.setBackgroundColor(Color.parseColor("#043701"));
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
