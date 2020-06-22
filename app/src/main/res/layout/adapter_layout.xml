@@ -4,11 +4,11 @@
     android:id="@+id/parentLayout_recipe"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="0dp"
+    android:layout_marginBottom="4dp"
     android:alwaysDrawnWithCache="false"
     android:animateLayoutChanges="false"
     android:animationCache="false"
-    android:background="@color/colorDarkGreen"
+    android:background="#DD033101"
     android:clickable="true"
     android:padding="5dp">
 

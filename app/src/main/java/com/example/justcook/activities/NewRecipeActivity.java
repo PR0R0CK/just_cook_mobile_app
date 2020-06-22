@@ -183,6 +183,7 @@ public class NewRecipeActivity extends AppCompatActivity {
                     recipeIngredients,recipeSteps,recipeDifficulty,"0"));
 
             //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            finish();
         }
 
     }
