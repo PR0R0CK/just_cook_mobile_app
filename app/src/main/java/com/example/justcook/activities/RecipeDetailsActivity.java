@@ -99,7 +99,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         ((Button)findViewById(R.id.like_button_details)).setText(recipe.getRate());
 
 
-        if(firebaseUser.getUid().equals(recipe.getUser().getUserId())) {
+        if(firebaseUser.getEmail().equals(recipe.getUser().getEmail())) {
             enableEditing();
         } else {
             Toast.makeText(this,"Content is not available to edit!",Toast.LENGTH_LONG).show();
