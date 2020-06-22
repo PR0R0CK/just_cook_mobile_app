@@ -180,7 +180,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
     }
 
-    private void getAllMainRecipes() {
+    private void getAllMyRecipes() {
         reference = database.getReference("/recipes");
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -329,7 +329,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_my_recipes) {
             currentFilter="my_recipes";
             Toast toast = Toast.makeText(getApplicationContext(), "My recipies", Toast.LENGTH_SHORT);
-            getAllMainRecipes();
+            getAllMyRecipes();
             toast.show();
         } else if (id == R.id.nav_soups) {
             currentFilter="soups";
