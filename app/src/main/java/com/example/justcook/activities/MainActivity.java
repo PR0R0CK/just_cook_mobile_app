@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             break;
             case "Soups": getAllSoupRecipes();
             break;
-            case "My recipes": getAllRecipes(); //TODO: ZAMIENIĆ NA FUNKCJĘ WCZYTUJĄ PRZEPISY UŻYTKOWNIKA
+            case "My recipes": getAllMyRecipes(); //TODO: ZAMIENIĆ NA FUNKCJĘ WCZYTUJĄ PRZEPISY UŻYTKOWNIKA
             break;
         }
 
@@ -192,13 +192,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //                        String type = dss.child("type").getValue(String.class);
                         if (firebaseUser.getUid().equals(recipe.getUser().getUserId())) {
                             allRecipes.add(recipe);
-//                            Log.d("##@@!!",recipe.getType());
+                            Log.d("##@@!!USER",firebaseUser.getEmail());
                         }
 //                        System.out.println("##@@" + allRecipes.toString());
                     }
-                    initRecyclerView(allRecipes);
-                    Log.d("##@@",allRecipes.get(0).getName());
-
+                    if (allRecipes.isEmpty()) {
+                        Toast.makeText(MainActivity.this,"You didn't add recipes yet!",Toast.LENGTH_LONG).show();
+                    } else {
+                        initRecyclerView(allRecipes);
+                        Log.d("##@@", allRecipes.get(0).getName());
+                    }
                 }
             }
 
