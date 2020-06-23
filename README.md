@@ -7,6 +7,7 @@
 ####   a my możemy w pelni korzystać z usług aplikacji.
 
 ![phone](app/src/main/res/readme/rejestracja.gif)
+![phone](app/src/main/res/readme/rejestracja_DB.png)
 
 ### Adding user to database
 <!--![phone](app/src/main/res/readme/db_added.png)-->
