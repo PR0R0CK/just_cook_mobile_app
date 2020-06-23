@@ -6,7 +6,7 @@
 ####   W tym momencia nasz uzytkownik zostal dodany do bazy danych,
 ####   a my możemy w pelni korzystać z usług aplikacji.
 
-![phone](app/src/main/res/readme/first_validation.gif)
+![phone](app/src/main/res/readme/rejestracja.gif)
 
 ### Adding user to database
 <!--![phone](app/src/main/res/readme/db_added.png)-->
