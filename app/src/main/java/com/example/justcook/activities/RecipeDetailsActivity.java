@@ -397,9 +397,10 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(RecipeDetailsActivity.this, "This recipe has been deleted!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RecipeDetailsActivity.this, "This recipe will be deleted soon!", Toast.LENGTH_SHORT).show();
                 deleteRecipeFromFirebaseDatabase();
                 alertDialog.dismiss();
+                finish();
             }
         });
         cancel.setOnClickListener(new View.OnClickListener() {
