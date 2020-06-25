@@ -9,6 +9,10 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.justcook.model.Commentary;
+import com.example.justcook.model.User;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,6 +31,7 @@ import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.justcook.R;
@@ -37,10 +42,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    TextView tvEmail;
     ArrayList<RecipeBook> recipeBooks = new ArrayList<>();
     private ArrayList<RecipeBook> allRecipes = new ArrayList<>();
     private DatabaseReference reference;
     private FirebaseDatabase database;
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser firebaseUser;
     private RecipeBook recipe;
     private String currentFilter = "all";
 
@@ -48,6 +56,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
+
+        String em = firebaseUser.getEmail();
+        String em1 = firebaseUser.getUid();
+
+        Toast.makeText(this,em,Toast.LENGTH_SHORT).show();
+        // Błąd !!!
+//        tvEmail.setText(em);
+
 
         //SETTING UP NAV DRAWER
         DrawerLayout drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
@@ -60,6 +78,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         recipe = new RecipeBook();
 
         getAllRecipes();
+    }
+
+    @Override
+    protected void onResume() {
+        switch(currentFilter){
+            case "all": getAllRecipes();
+            break;
+            case "Desserts": getAllDessertRecipes();
+            break;
+            case "Main courses": getAllMainCourses();
+            break;
+            case "Soups": getAllSoupRecipes();
+            break;
+            case "My recipes": getAllMyRecipes(); //TODO: ZAMIENIĆ NA FUNKCJĘ WCZYTUJĄ PRZEPISY UŻYTKOWNIKA
+            break;
+        }
+
+        super.onResume();
     }
 
     private void getAllRecipes() {
@@ -135,6 +171,37 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     initRecyclerView(allRecipes);
                     Log.d("##@@",allRecipes.get(0).getName());
 
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+    }
+
+    private void getAllMyRecipes() {
+        reference = database.getReference("/recipes");
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    allRecipes.clear();
+                    for (DataSnapshot dss:dataSnapshot.getChildren()) {
+                        recipe = dss.getValue(RecipeBook.class);
+//                        String type = dss.child("type").getValue(String.class);
+                        if (firebaseUser.getUid().equals(recipe.getUser().getUserId())) {
+                            allRecipes.add(recipe);
+                            Log.d("##@@!!USER",firebaseUser.getEmail());
+                        }
+//                        System.out.println("##@@" + allRecipes.toString());
+                    }
+                    if (allRecipes.isEmpty()) {
+                        Toast.makeText(MainActivity.this,"You didn't add recipes yet!",Toast.LENGTH_LONG).show();
+                    } else {
+                        initRecyclerView(allRecipes);
+                        Log.d("##@@", allRecipes.get(0).getName());
+                    }
                 }
             }
 
@@ -265,6 +332,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_my_recipes) {
             currentFilter="my_recipes";
             Toast toast = Toast.makeText(getApplicationContext(), "My recipies", Toast.LENGTH_SHORT);
+            getAllMyRecipes();
             toast.show();
         } else if (id == R.id.nav_soups) {
             currentFilter="soups";
@@ -273,6 +341,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             toast.show();
         } else if (id == R.id.nav_log_out) {
             Toast toast = Toast.makeText(getApplicationContext(), "Log out", Toast.LENGTH_SHORT);
+            firebaseAuth.signOut();
+            Intent intent = new Intent(MainActivity.this,LoginActivity.class);
+            startActivity(intent);
+            finish();
             toast.show();
         } else if (id == R.id.nav_add_recipe) {
             Intent intent = new Intent(this, NewRecipeActivity.class);

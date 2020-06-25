@@ -8,29 +8,4 @@
     android:orientation="vertical"
     android:gravity="bottom"
     android:paddingLeft="15dp"
-    android:paddingBottom="15dp">
-
-    <TextView
-        android:id="@+id/email_textView_header"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Email"
-        android:textColor="@android:color/white"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/username_textView_header"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Username"
-        android:textColor="@android:color/white" />
-
-    <TextView
-        android:id="@+id/stat_textView_header"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="*some stats?*"
-        android:textColor="@android:color/white"
-        android:textStyle="italic" />
-
-</LinearLayout>
+    android:paddingBottom="15dp"/>

@@ -42,33 +42,32 @@ public class LoginActivity extends AppCompatActivity {
 //                Toast.makeText(LoginActivity.this, "Email: "+email+", Password: "+password,
 //                        Toast.LENGTH_SHORT).show();
 
-                mAuth.signInWithEmailAndPassword(email,password)
+                if (email.isEmpty() || password.isEmpty()) {
+                    Toast.makeText(LoginActivity.this, "Fill the fields first!", Toast.LENGTH_SHORT).show();
+                } else {
+                mAuth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    Log.d("###Login","loginWithEmail: success");
+                                    Log.d("###Login", "loginWithEmail: success");
                                     FirebaseUser user = mAuth.getCurrentUser();
                                     verifyingUser(user);
+                                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                    finish();
                                 }
                             }
                         })
-                .addOnFailureListener(LoginActivity.this, new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(LoginActivity.this, "Authentication failed: "
-                                + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
+                        .addOnFailureListener(LoginActivity.this, new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(LoginActivity.this, "Authentication failed: "
+                                        + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                }
             }
         });
-        //Musialem zmienic ten fragment onclicka, bo kliknięcie back w main activity cofnęłoby
-        //do rejestracji/logowania
-//        findViewById(R.id.backToRegister_editText_login).setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//                finish();
-//            }
-//        });
     }
 
     private void verifyingUser(FirebaseUser user) {

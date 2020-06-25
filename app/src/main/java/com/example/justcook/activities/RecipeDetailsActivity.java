@@ -38,11 +38,15 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Timer;
 import java.util.TimerTask;
 
 
 public class RecipeDetailsActivity extends AppCompatActivity {
+    RecipeBook newRecipe;
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser firebaseUser;
     private String nameOfUser = "";
     private FirebaseDatabase database;
     private DatabaseReference reference;
@@ -57,31 +61,13 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_details);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
+
         database = FirebaseDatabase.getInstance();
         userr = new User();
         commentarry = new Commentary();
-        //PLACEHOLDER KOMENTARZY
-//        ArrayList<Commentary> comments = new ArrayList<>();
-//        User user1 = new User("Z9cxtM7nM3V4rfK69yG25LlkSQj2","user","mail@gmail.com");
-//        comments.add(new Commentary("User1","Comment1","1"));
-//        comments.add(new Commentary("User2","Comment2","1"));
-//        comments.add(new Commentary("User1","Comment1","1"));
-//        comments.add(new Commentary("User2","Comment2","1"));
-//        comments.add(new Commentary("User1","Comment1","1"));
-//        comments.add(new Commentary("User2","Comment2","1"));
-//        comments.add(new Commentary("User1","Comment1","1"));
-//        comments.add(new Commentary("User2","Comment2","1"));
-//        comments.add(new Commentary("User1","Comment1","1"));
-//        comments.add(new Commentary("User2","Comment2","1"));
-//        comments.add(new Commentary("User1","Comment1","1"));
-//        comments.add(new Commentary("User2","Comment2","1"));
-//        comments.add(new Commentary("User1","Comment1","1"));
-//        comments.add(new Commentary("User2","Comment2","1"));
-//        comments.add(new Commentary("User1","Comment1","1"));
-//        comments.add(new Commentary("User2","Comment2","1"));
-//        //KONIEC PLACEHOLDERA KOMENTARZY
-//        initRecyclerView(comments);
-
+        newRecipe = new RecipeBook();
 
         ////////////////////////////////////////
         //ODEBRANIE INFORMACJI O PRZEPISIE
@@ -108,18 +94,24 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         getAllComments();
 
 
+
         ((TextView) findViewById(R.id.title_textView_details)).setText(recipe.getName());
         //DODANIE SKŁADNIKÓW I KROKÓW DO ODPOWIADAJĄCYCH IM LAYOUTÓW
         insertDetails(recipe.getIngredients(),recipe.getRecipe());
         ((Button)findViewById(R.id.like_button_details)).setText(recipe.getRate());
 
-        //TODO: DODAĆ SPRAWDZANIE CZY OBECNY UŻYTKOWNIK JEST WŁAŚCICIELEM
-        enableEditing();
+
+        if(firebaseUser.getEmail().equals(recipe.getUser().getEmail())) {
+            enableEditing();
+        }
     }
+
 
     private void getAllComments() {
         reference = database.getReference("/comments");
+        allComments.clear();
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
+
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
@@ -130,6 +122,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
                         }
 //                        System.out.println("##@@" + allRecipes.toString());
                     }
+                    Collections.reverse(allComments);
                     initRecyclerView(allComments);
                 }
             }
@@ -149,6 +142,20 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         commentary.setCommentId(commentId);
 //        ref.ge
         ref.push().setValue(commentary);
+        Timer buttonTimer = new Timer();
+        buttonTimer.schedule(new TimerTask() {
+
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        getAllComments();
+                    }
+                });
+            }
+        }, 1000);
 //        recipesBook.add(recipeBook);
 //        ref.setValue(recipesBook);
     }
@@ -231,10 +238,6 @@ public class RecipeDetailsActivity extends AppCompatActivity {
     }
 
     public void sendComment(View view) {
-        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-
-        //TODO: TUTAJ NALEŻY WSTAWIĆ LOGIKĘ WSTAWIANIA KOMENTARZA DO BAZY DANYCH
         EditText editText = findViewById(R.id.comment_EditText_details);
         String comment = editText.getText().toString(); //TODO: GOTOWA ZAWARTOŚĆ KOMENTARZA
         editText.setText("");
@@ -242,7 +245,6 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
         Toast toast = Toast.makeText(getApplicationContext(), "Your comment is being sent: "+comment, Toast.LENGTH_SHORT);
         toast.show();
-
 
         // Saving data to FireabaseDatabase
         if(firebaseUser != null) {
@@ -289,8 +291,8 @@ public class RecipeDetailsActivity extends AppCompatActivity {
 
     public void likeRecipe(View view) {
         Button button = findViewById(R.id.like_button_details);
-        int likes = Integer.parseInt(String.valueOf(button.getText()));
-        //TODO: AKTUALIZACJA POLUBIEŃ W BAZIE, PIERWSZE - NOWE POLUBIENIE, DRUGIE - ANULOWANIE POLUBIENIA
+        int likes = Integer.parseInt(String.valueOf(recipe.getRate()));
+        //TODO: To nie zadziała
         if(button.getTag().equals("0")){
             button.setText(String.valueOf(likes+1));
             button.setCompoundDrawablesWithIntrinsicBounds(android.R.drawable.btn_star_big_on,0,0,0);
@@ -302,11 +304,36 @@ public class RecipeDetailsActivity extends AppCompatActivity {
             button.setTag("0");
             Toast.makeText(this, "You no longer like this recipe", Toast.LENGTH_SHORT).show();
         }
-        timeout(view);
 
+        updateRateToDatabase();
+
+        timeout(view);
 
     }
 
+    private void updateRateToDatabase() {
+        final String idR = recipe.getRecipeId();
+        Integer rate = Integer.parseInt(recipe.getRate());
+        final Integer newRate = rate+1;
+//        database.getReference().child("recipes").child(idR).child("rate").setValue(String.valueOf(newRate));
+//        database.getReference().child("recipes").child(idR).child("rate").
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("recipes");
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot dss : dataSnapshot.getChildren()){
+                    newRecipe = dss.getValue(RecipeBook.class);
+                    String key = dss.getKey();
+                    if (newRecipe.getRecipeId().equals(recipe.getRecipeId())) {
+                        database.getReference().child("recipes").child(key).child("rate").setValue(String.valueOf(newRate));
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+    }
     private void timeout(final View view) {
         view.setEnabled(false);
         Timer buttonTimer = new Timer();
@@ -349,7 +376,6 @@ public class RecipeDetailsActivity extends AppCompatActivity {
     }
 
     public void deleteRecipe(View view) {
-        Toast.makeText(this, "usuniecie trza zrobic dopiero Pepega", Toast.LENGTH_SHORT).show();
         final AlertDialog.Builder alert = new AlertDialog.Builder(RecipeDetailsActivity.this);
         View mView = getLayoutInflater().inflate(R.layout.delete_dialog,null);
         Button delete = (Button)mView.findViewById(R.id.delete_dialog);
@@ -361,11 +387,10 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(RecipeDetailsActivity.this, "*usunięcie przepisu tutaj*", Toast.LENGTH_SHORT).show();
-
-
-
+                Toast.makeText(RecipeDetailsActivity.this, "This recipe will be deleted soon!", Toast.LENGTH_SHORT).show();
+                deleteRecipeFromFirebaseDatabase();
                 alertDialog.dismiss();
+                finish();
             }
         });
         cancel.setOnClickListener(new View.OnClickListener() {
@@ -375,6 +400,27 @@ public class RecipeDetailsActivity extends AppCompatActivity {
             }
         });
         alertDialog.show();
+    }
+
+    private void deleteRecipeFromFirebaseDatabase() {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("recipes");
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot dss : dataSnapshot.getChildren()){
+                    newRecipe = dss.getValue(RecipeBook.class);
+                    String key = dss.getKey();
+                    if (newRecipe.getRecipeId().equals(recipe.getRecipeId())) {
+                        database.getReference().child("recipes").child(key).removeValue();
+                        break;
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e("#cancelled", "onCancelled", databaseError.toException());
+            }
+        });
     }
 }
 
