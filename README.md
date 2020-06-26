@@ -45,7 +45,6 @@
 ![phone](app/src/main/res/readme/rejestracja.gif)
 ![phone](app/src/main/res/readme/rejestracja_DB.png)
 
-### Adding user to database
 <!--![phone](app/src/main/res/readme/db_added.png)-->
 
 ### Logowanie użytkownika
@@ -54,3 +53,60 @@
 ####    W przypadku nie odnalezienia użytkownika o podanym e-mailu oraz haśle, użytkownik zostanie o tym poinformowany.
 
 ![phone](app/src/main/res/readme/demo/logging_in.gif)
+
+### Logowanie automatyczne
+####    Logowanie użytkownika odbywa się automatycznie przy każdym starcie aplikacji, pod warunkiem, że ten nie użył opcji wylogowania.
+
+![phone](app/src/main/res/readme/demo/auto_login.gif)
+
+### Wylogowanie użytkownika
+####    Wylogowanie użytkownika odbywa się poprzez wybranie z menu nawigacyjnego opcji "Logout".
+####    Użycie tej opcji spowoduje, że użytkownik nie zostanie automatycznie zalogowany przy następnym starcie aplikacji.
+
+![phone](app/src/main/res/readme/demo/logout.gif)
+
+### Wyszukiwanie przepisów
+####    Aby wyszukać interesujące nas przepisy, należy wybrać z menu nawigacyjnego interesującą nas kategorię.
+####    Alternatywą jest wyszukiwanie przepisów po nazwie, które odbywa się po kliknięciu ikony lupy, wpisaniu poszukiwanej frazy oraz wyszukaniu przez kliknięcie lupy przy polu do wprowadzania.
+
+![phone](app/src/main/res/readme/demo/search.gif)
+
+### Wyświetlanie / ocenianie / komentowanie przepisu
+####    Żeby wyświetlić przepis, należy kliknąć na blok zawierający ten, który nas interesuje.
+####    Ocenianie odbywa się poprzez nasiścięcie gwiazdki. Akcja ta doda 1 do całkowicej oceny przepisu.
+####    Żeby skomentować przepis, należy nacisnąć pasek "Show comments", by wyświetlić komentarze, następnie należy napisać treść komentarza w przeznaczonym do tego polu, a następnie nacisnąć przycisk odpowiedzialny za wysłanie komentarza.
+####    Chcąc wrócić do menu głównego aplikacji należy nacisnąć przycisk cofania w androidzie.
+
+![phone](app/src/main/res/readme/demo/recipe_details_rate_comment.gif)
+
+### Dodanie nowego przepisu
+####    By dodać nowy przepis, należy z menu nawigacyjnego wybrać opcję "Add recipe", która przeniesie nas do ekranu dodawania nowego przepisu.
+####    Należy w tym miejscu uzupełnić informacje takie jak: nazwa przepisu, poziom trudności, typ przepisu, składniki, oraz kroki wykonywania przepisu.
+####    Po upewnieniu się, że informacje się zgadzają, należy nacisnąć przycisk "ADD RECIPE".
+####    Naciśnięcie przycisku doda przepis do bazy, oraz wróci użytkownika do ekranu głównego.
+
+![phone](app/src/main/res/readme/demo/add_recipe.gif)
+
+### Wyszukanie autorskich przepisów
+####    By wyszukać autorskie przepisy, należy wybrać z menu nawigacyjnego opcję "My Recipes".
+
+![phone](app/src/main/res/readme/demo/my_recipes.gif)
+
+### Edytowanie przepisu
+####    W aplikacji opcja ta jest jedynie dostępna dla autora przepisu.
+####    By edytować przepis, należy wybrać stworzony przez nas przepis z ekranu menu głównego.
+####    Po wyświetleniu przepisu, dostępna będzie opcja "EDIT RECIPE", która przeniesie użytkownika do ekranu edycji przepisu.
+####    Edycja przepisu wygląda analogicznie do dodawania nowego przepisu.
+####    Po zakończeniu edytowania, należy wybrać przycisk "EDIT RECIPE", który zaktualizuje dane w bazie, oraz wróci użytkownika do podglądu starej wersji przepisu.
+####    Chcąc wyświetlić nową wersję przepisu należy odświeżyć listę przepisów i następnie wybrać edytowany przez nas przepis.
+
+![phone](app/src/main/res/readme/demo/edit_recipe.gif)
+
+### Usunięcie przepisu
+####    W aplikacji opcja ta jest jedynie dostępna dla autora przepisu.
+####    By usunąć przepis, należy wybrać stworzony przez nas przepis z menu głównego.
+####    Po wyświetleniu przepisu, dostępna będzie opcja "DELETE RECIPE", która wyświetli menu dialogowe, oczekujące potwierdzenia decycji.
+####    Po usunięciu przepisu, użytkownik zostanie przeniesiony do menu głównego.
+
+![phone](app/src/main/res/readme/demo/delete_recipe.gif)
+
