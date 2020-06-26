@@ -34,6 +34,7 @@
 #### Taki błąd może wystąpić jednorazowo podczas pierwszej próby rozruchu aplikacji. W takim przypadku należy uruchomić widok projektu, odnaleźć folder readme i usunąć go.
 ![phone](app/src/main/res/readme/configuration/scr_err.jpg)
 
+# Obsługa aplikacji
 
 ### Rejestracja uzytkownika
 ####   Uzupelnic kolejno pola wpisujac: nazwe uzytkownika, adres mail, haslo.
@@ -46,3 +47,10 @@
 
 ### Adding user to database
 <!--![phone](app/src/main/res/readme/db_added.png)-->
+
+### Logowanie użytkownika
+####    Żeby się zalogować, należy uzupełnić pola wpisując: e-mail oraz hasło.
+####    Gdy użytkownik zostanie odnaleziony w bazie, a dane logowania będą się zgadzać, ten zostanie przeniesiony do ekranu głównego aplikacji.
+####    W przypadku nie odnalezienia użytkownika o podanym e-mailu oraz haśle, użytkownik zostanie o tym poinformowany.
+
+<!--![phone](app/src/main/res/demo/logging_in.png)-->
