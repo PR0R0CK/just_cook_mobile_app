@@ -53,4 +53,4 @@
 ####    Gdy użytkownik zostanie odnaleziony w bazie, a dane logowania będą się zgadzać, ten zostanie przeniesiony do ekranu głównego aplikacji.
 ####    W przypadku nie odnalezienia użytkownika o podanym e-mailu oraz haśle, użytkownik zostanie o tym poinformowany.
 
-<!--![phone](app/src/main/res/demo/logging_in.gif)-->
+![phone](app/src/main/res/demo/logging_in.gif)
