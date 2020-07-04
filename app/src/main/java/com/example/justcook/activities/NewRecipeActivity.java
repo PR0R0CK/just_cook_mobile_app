@@ -174,8 +174,6 @@ public class NewRecipeActivity extends AppCompatActivity {
                 recipeSteps += databaseDelimiter;
             }
             Log.d("Steps: ", recipeSteps);
-            //TODO: DODANIE WARTOŚCI DO BAZY
-            //AREK, JAK CHCESZ DODAWAĆ DO BAZY TO W TYM MIEJSCU
             //vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 
             User user = new User(firebaseUser.getUid(),firebaseUser.getDisplayName(),firebaseUser.getEmail());

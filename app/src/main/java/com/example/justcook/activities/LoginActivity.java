@@ -39,8 +39,6 @@ public class LoginActivity extends AppCompatActivity {
 
                 Log.d("###MainActivit", "Email: " + email);
                 Log.d("###MainActivit", "Password: " + password);
-//                Toast.makeText(LoginActivity.this, "Email: "+email+", Password: "+password,
-//                        Toast.LENGTH_SHORT).show();
 
                 if (email.isEmpty() || password.isEmpty()) {
                     Toast.makeText(LoginActivity.this, "Fill the fields first!", Toast.LENGTH_SHORT).show();
